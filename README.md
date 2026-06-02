@@ -18,7 +18,7 @@ The combination Whisper-Tinyllama-Kokoro (or WTK) was carefully chosen based on 
 
 - ***TinyLllama***: Ollama provides us with the opportunity to simplify the process of hosting LLM locally. It supports many models with a variety such as Llama2, gemma,.... However, since I just want to have a light and fast language model, TinyLlama is my top choice. TinyLlama, strictly speaking, is a small language model not an standard LLM like ChatGPT. SLM doesn't perform well on a massive dataset or prompt but it work well for specialized tasks. This makes it perfect for fine-tuning.<br/>
 
-- ***Kokoro***: The Kokoro TTS has quality voices and is really light with just **82 million parameters**. It support multiple languages such Japanese and Chinese. I like this because it voice sounds somewhat authentic to me. <br/>
+- ***Kokoro***: The Kokoro TTS has quality voices and is really light with just **82 million parameters**. It support multiple languages such Japanese and Chinese. I like this because its voice sounds authentic and emotional to me. <br/>
 
 Other components:
 - ***Sounddevice***: This is just python library that help you record from the mic and speak from the speaker<br/>
