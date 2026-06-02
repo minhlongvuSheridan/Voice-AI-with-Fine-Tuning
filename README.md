@@ -9,7 +9,25 @@
 # Tech Used 🛠️
 
 # Structure Folder 📂
-
+- **assets**
+  - **images**: Images Avatar for the UI
+  - **voices**: Voices for the kokoro model
+- **fine_tune**
+  -  ***Modelfile***: Configuration file to create local ollama model 
+  -  ***genz3.jsonl***: data to fine tune model 
+  -  ***tinyllama_finetune.ipynb***: Python scripts to fine tune the model. Inteneded to run on Google Colab
+- **measures**:
+  - ***prompt_ollama.txt***: Time (s) frompt prompt to the first chunk of response
+  - ***transcribe_whisper.txt***: Time (s) for whisper to transcribe a sentence
+  - ***tts_kokoro.txt***: Time (s) for kokoro to generate the audio array
+  - ***test_performance.Rmd***: an R script to display the box plot for comparision between three above files
+- **src**:
+  - ***chat_classes.py***: Contains the UI
+  - ***vad.py***: Main logic for the Voice Activity Detection
+  - ***worker.py***: Workers for each thread
+  - ***worker_time.py***: same as above but it produce files in measures folder
+- ***main.py***: The main program that run the AI chat bot
+- ***requirements.txt***: Required dependencies for the program.
 # Notes Before You Run ⚠️
 
 # Run scripts 🚀
