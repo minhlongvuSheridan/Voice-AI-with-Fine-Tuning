@@ -7,6 +7,13 @@
 # Demo 📊
 
 # Tech Used 🛠️
+<p align="left">
+  <img src="https://img.shields.io/badge/PYTHON-0d1117?style=for-the-badge&logo=python&logoColor=3776AB" alt="Python">
+  <img src="https://img.shields.io/badge/TKINTER-0d1117?style=for-the-badge" alt="Tkinter">
+  <img src="https://img.shields.io/badge/FASTER_WHISPER-0d1117?style=for-the-badge" alt="Faster Whisper">
+  <img src="https://img.shields.io/badge/KOKORO_TTS-0d1117?style=for-the-badge" alt="Kokoro TTS">
+  <img src="https://img.shields.io/badge/OLLAMA-0d1117?style=for-the-badge&logo=ollama&logoColor=white" alt="Ollama">
+</p>
 
 # Structure Folder 📂
 - **assets**
