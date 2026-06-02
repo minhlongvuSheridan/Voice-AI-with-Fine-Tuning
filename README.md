@@ -1,11 +1,15 @@
 <h1 align="center">🤖 Voice AI with Fine Tuning 🤖 </h1>
 
-# Tech Used🛠️
 
-# Description📝
 
-# Run scripts🚀
+# Description 📝
 
-# Demo📊
+# Demo 📊
+
+# Tech Used 🛠️
+
+# Structure Folder 📂
+
+# Run scripts 🚀
 
 # Make Your Own AI Voice 🤖🔊
