@@ -77,3 +77,11 @@
   ```
 
 # Make Your Own AI Voice 🤖🔊
+I have prepare the tutorial for this. But generally there are three steps:
+- Step 1: Create your own dataset
+- Step 2: Turn on T4 GPU on Google Colab and train based on *tinyllama_finetune.ipynb*
+- Step 3: Download gguf file and make local model based on *Modelfile*
+
+
+
+
