@@ -3,7 +3,7 @@
 
 
 # Description 📝
-### Problem
+### Objective
 The core objective of the project is to build an AI bot that could interact with users like a Gen Z friend. It is fully open source and runs completely offline with **zero API key**<br/><br/>
 The problem with the usual model is that it sounds too generic or polite, and their answer is quite long. Those problems could be solved with *prompt engineering*. However, when we want it to match exactly one very specific style of speaking, we need to provide a longer system prompt so it can learn from it.  Longer prompt means it has to consume more context window and time.<br/><br/>
 I don't want my model to read those system prompts every time I instruct something. Thus, I chose fine-tuning as an alternative for the heavy system prompt in this project. Fine-tuning with LoRA basically involves directly adjusting small portions of parameter weights to fit a specific task. As a result, it loses its generalization for general tasks but becomes specialized for narrow tasks. This is what makes it faster since it just reduces the massive system prompt overhead<br/><br/>
