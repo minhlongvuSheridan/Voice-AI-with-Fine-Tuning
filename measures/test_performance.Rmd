@@ -1,0 +1,50 @@
+---
+title: "Test Time of Whisper+tinyLLama+Kokoro TTS"
+output: html_document
+date: "2026-06-02"
+---
+```{r}
+# replace with your own path
+
+ollama_file <-"C:\\Users\\haivu\\OneDrive - Sheridan College\\Desktop\\computer\\Project\\Chat_Box_AI\\test_requirement\\prompt_ollama.txt"
+kokoro_file <- "C:\\Users\\haivu\\OneDrive - Sheridan College\\Desktop\\computer\\Project\\Chat_Box_AI\\test_requirement\\tts_kokoro.txt"
+whisper_file <- "C:\\Users\\haivu\\OneDrive - Sheridan College\\Desktop\\computer\\Project\\Chat_Box_AI\\test_requirement\\transcribe_whisper.txt"
+
+ollama <- readLines(ollama_file)
+kokoro <- readLines(kokoro_file)
+whisper <- readLines(whisper_file)
+
+ollama_numeric <- as.numeric(ollama)
+kokoro_numeric <- as.numeric(kokoro)
+whisper_numeric <- as.numeric(whisper)
+
+df <- bind_rows(
+  
+  data.frame(model = "Kokoro TTS", value = kokoro_numeric),
+  data.frame(model = "Ollama - Time to first chunk", value = ollama_numeric),
+  data.frame(model = "Faster Whisper", value = whisper_numeric)
+)
+```
+```{r}
+library(ggplot2)
+library(dplyr)
+
+
+
+# Calculate medians for labeling
+medians <- df %>%
+  group_by(model) %>%
+  summarize(median_val = median(value, na.rm = TRUE))
+
+# Update the plot to include labels
+ggplot(df, aes(x = model, y = value, fill = model)) +
+  geom_boxplot() +
+  coord_cartesian(ylim = c(0, 1)) +
+  # This adds the exact numbers to the plot
+  geom_text(data = medians, aes(x = model, y = median_val, label = round(median_val, 3)), 
+            vjust = -1.5, size = 5) +
+  labs(title = "Comparison of Model Latency",
+       x = "Model Type",
+       y = "Time (seconds)") +
+  theme_minimal()
+```

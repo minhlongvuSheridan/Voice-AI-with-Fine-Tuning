@@ -1,0 +1,22 @@
+FROM tinyllama-chat.Q8_0.gguf
+
+# Strictly matches your Python format. No SYSTEM variable included.
+TEMPLATE """<|user|>
+{{ .Prompt }}</s>
+<|assistant|>
+"""
+
+PARAMETER stop "<|user|>"
+PARAMETER stop "<|assistant|>"
+PARAMETER stop "</s>"
+PARAMETER stop "<pre_eos>"
+
+
+PARAMETER temperature 0.7
+PARAMETER top_k 5
+PARAMETER repeat_penalty 1.2
+PARAMETER num_predict 512
+
+
+PARAMETER top_p 0.9
+PARAMETER min_p 0.1
