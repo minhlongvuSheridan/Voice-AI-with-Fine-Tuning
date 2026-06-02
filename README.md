@@ -3,6 +3,27 @@
 
 
 # Description 📝
+### Problem
+The core objective of the project is to build an AI bot that could interact with users like a Gen Z friend. It is fully open source and runs completely offline with **zero API key**<br/><br/>
+The problem with the usual model is that it sounds too generic or polite, and their answer is quite long. Those problems could be solved with *prompt engineering*. However, when we want it to match exactly one very specific style of speaking, we need to provide a longer system prompt so it can learn from it.  Longer prompt means it has to consume more context window and time.<br/><br/>
+I don't want my model to read those system prompts every time I instruct something. Thus, I chose fine-tuning as an alternative for the heavy system prompt in this project. Fine-tuning with LoRA basically involves directly adjusting small portions of parameter weights to fit a specific task. As a result, it loses its generalization for general tasks but becomes specialized for narrow tasks. This is what makes it faster since it just reduces the massive system prompt overhead<br/><br/>
+To make it like a conversation between friends, I also use Automatic Speech Recognition (ASR) and Text-to-Speech (TTS) to enable the listening and speaking functionalities, respectively. 
+Based on the reflection of many conversations with my friends, I simply define Gen Z as those who frequently use Gen Z slang such as "cooked, pass, cap..." and always end sentences with emoticons such as :)), :<, :>... <br/>
+### Architecture
+The figure below is the general workflow of the project <br/>
+<img width="1614" height="340" alt="image" src="https://github.com/user-attachments/assets/d7f5ce8d-1947-4cc5-a7b2-7e6120ac2d46" />
+
+The combination Whisper-Tinyllama-Kokoro (or WTK) was carefully chosen based on the trendings and the tutorials available.<br/>
+- ***Whisper***: The Whisper model is a stable and popular ASR model that is supported by OpenAI. In my experience, the medium is quite good at transcribing voice with an accent (me).<br/>
+
+- ***TinyLllama***: Ollama provides us with the opportunity to simplify the process of hosting LLM locally. It supports many models with a variety such as Llama2, gemma,.... However, since I just want to have a light and fast language model, TinyLlama is my top choice. TinyLlama, strictly speaking, is a small language model not an standard LLM like ChatGPT. SLM doesn't perform well on a massive dataset or prompt but it work well for specialized tasks. This makes it perfect for fine-tuning.<br/>
+
+- ***Kokoro***: The Kokoro TTS has quality voices and is really light with just **82 million parameters**. It support multiple languages such Japanese and Chinese. I like this because it voice sounds somewhat authentic to me. <br/>
+
+Other components:
+- ***Sounddevice***: This is just python library that help you record from the mic and speak from the speaker<br/>
+
+- ***Tkinter***: Library help create GUI to display the text
 
 # Demo 📊
 
@@ -70,8 +91,11 @@
   Make sure that the CUDA is supported and the GPU name is displayed
   <img width="1258" height="77" alt="image" src="https://github.com/user-attachments/assets/2ee5c311-1a36-4387-bc29-37aa4722e889" />
 
-
-- **Step 9**: Run and enjoy your AI Bot
+- **Step 10**: Create the TinyLlama in ollama
+  ```python
+  ollama create genz -f ./fine_tune/Modelfile
+  ```
+- **Step 11**: Run and enjoy your AI Bot
   ```python
   python main.py
   ```
