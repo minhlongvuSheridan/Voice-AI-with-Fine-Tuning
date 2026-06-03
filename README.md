@@ -20,11 +20,13 @@ The combination Whisper-Tinyllama-Kokoro (or WTK) was carefully chosen based on 
 - ***Kokoro***: The Kokoro TTS has quality voices and is really light with just **82 million parameters**. It support multiple languages such Japanese and Chinese. I like this because its voice sounds authentic and emotional to me. <br/>
 
 Other components:
+- ***Voice Activity Detection***: A basic self-implement class to detect whenever there is a voice.
 - ***Sounddevice***: This is just python library that help you record from the mic and speak from the speaker<br/>
 
 - ***Tkinter***: Library help create GUI to display the text
 
-Give an diagram here
+### Latency Statistic
+
 # Demo 📊
 
 # Tech Used 🛠️
