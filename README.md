@@ -56,13 +56,26 @@ Other components:
 - ***main.py***: The main program that run the AI chat bot
 - ***requirements.txt***: Required dependencies for the program.
 # Notes Before You Run ⚠️
-- **disk storage**: The whole fully functional project took around 7.1 GB of 
--  **VRAM - GPU RAM**:
-    - TinyLlama: 1358 Mib
-    - Pytorch Kokoro TTS: 850 Mib
-    - Whisper - Medium: 3871 Mib
-  Together they took around 5.9 Gib VRAM.
-If 5.9 Gib is too much for your GPU, consider switching Whisper ASR from medium to tiny version.  It is lighter and faster but in trade of performance (terrible for those with heavy accents). Tiny version only takes 243 Mib which contribute to a total of around 3 Gib VRAM
+I ran this project on the 8 GB RTX 4060 Laptop GPU.
+- **Storage**: The whole fully functional project took around 7.1 GB of disk space.
+- **VRAM - GPU RAM**: ~~5.9 GiB
+    - ***TinyLlama***: 1358 Mib
+    - ***Pytorch Kokoro***: 850 Mib
+    - ***Whisper - Medium***: 3871 Mib<br/>
+    
+    
+If 5.9 Gib is too much for your GPU, consider switching Whisper ASR from medium to tiny version.  It is lighter and faster but in trade of performance (terrible for those with heavy accents). Tiny version only takes 250 Mib which contribute to a total of around 2.4 Gib VRAM
+-  **VRAM - GPU RAM**: ~~2.4 GiB
+    - ***TinyLlama***: 1358 Mib
+    - ***Pytorch Kokoro***: 850 Mib
+    - ***Whisper - Tiny***: 250 Mib<br/>
+
+If you are still short on the VRAM (assuming that you have GPU VRAM of 2Gib ). You can actually run the 4-bit quantized tinyLlama which only take around 850 Mib (detail in the tutorial).
+-  **VRAM - GPU RAM**: ~~1.9 GiB
+    - ***TinyLlama - 4-bit***: 850 Mib
+    - ***Pytorch Kokoro TTS***: 850 Mib
+    - ***Whisper - Tiny***: 250 Mib<br/>
+
 # Run scripts 🚀
 - **Step 1:** Open command prompt terminal in your project folder
 - **Step 2**: Clone the project
@@ -125,7 +138,11 @@ To this </br>
 #### Machine actively refuse
 If you are able to run but get crash while prompting or speaking and get the error like below
 <img width="1149" height="333" alt="image" src="https://github.com/user-attachments/assets/dd75d74d-5495-48f4-88f4-227857151363" />
-it is likely that you have not turn on the Ollama. Just open it on and the problem solved
+it is likely that you have not turn on the Ollama App. The reason is that we don't actually run the TinyLlama in our python script. The Ollama runs it and we just use API calls under the hood. We only actually runs the Whisper and Kokoro TTS in our python application<br/>
+Go to the Search bar and type "Ollama"<br/>
+<img width="415" height="124" alt="image" src="https://github.com/user-attachments/assets/1e1b0156-0b96-48aa-a502-d06cee63ff3a" />
+
+Just open it on and the problem solved
 
 
 
