@@ -35,6 +35,11 @@ Then run this command to install required dependencies
 ```python
 !pip install unsloth trl peft accelerate bitsandbytes
 ```
-It might take some time. When it is done, it will ask you whether you want to restart the session. click on yes restart
+It might take some time. When it is done, it will ask you whether you want to restart the session. click on ***restart session***
+<img width="624" height="293" alt="image" src="https://github.com/user-attachments/assets/d33871d9-1a68-4b10-9dca-7d349cbd9940" />
+
+#### Step 3: Load and process the data
+
+
 
 
