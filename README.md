@@ -13,7 +13,7 @@ The figure below is the general workflow of the project <br/>
 <img width="1614" height="340" alt="image" src="https://github.com/user-attachments/assets/d7f5ce8d-1947-4cc5-a7b2-7e6120ac2d46" />
 
 The combination Whisper-Tinyllama-Kokoro (or WTK) was carefully chosen based on the trendings and the tutorials available.<br/>
-- ***Whisper***: The Whisper model is a stable and popular ASR model that is supported by OpenAI. In my experience, the medium is quite good at transcribing voice with an accent (me).<br/>
+- ***Whisper***: The Whisper model is a stable and popular ASR model that is supported by OpenAI. It comes with multiple sizes tiny, medium, large... In my experience, the medium is quite good at transcribing voice with an accent (me).<br/>
 
 - ***TinyLllama***: Ollama provides us with the opportunity to simplify the process of hosting LLM locally. It supports many models with a variety such as Llama2, gemma,.... However, since I just want to have a light and fast language model, TinyLlama is my top choice. TinyLlama, strictly speaking, is a small language model not an standard LLM like ChatGPT. SLM doesn't perform well on a massive dataset or prompt but it work well for specialized tasks. This makes it perfect for fine-tuning.<br/>
 
