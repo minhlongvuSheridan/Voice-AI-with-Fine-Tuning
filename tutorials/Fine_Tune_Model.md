@@ -213,5 +213,6 @@ def generate_response(user_input):
 we can see that there are two upper bounds for the output which could cause confusion. The model choose to use *max_new_tokens* which means they can generate if it already exceed the *max_sequence_length*
 
 #### Step 8: Download and make local file
+[This](https://oneuptime.com/blog/post/2026-02-02-ollama-custom-modelfiles/view) shows how we can customize the Modelfile 
 
 
