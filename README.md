@@ -24,6 +24,7 @@ Other components:
 
 - ***Tkinter***: Library help create GUI to display the text
 
+Give an diagram here
 # Demo 📊
 
 # Tech Used 🛠️
