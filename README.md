@@ -98,13 +98,22 @@ Other components:
   ```python
   python main.py
   ```
-
 # Make Your Own AI Voice 🤖🔊
 I have prepare the tutorial for this. But generally there are three steps:
 - Step 1: Create your own dataset
 - Step 2: Turn on T4 GPU on Google Colab and train based on *tinyllama_finetune.ipynb*
 - Step 3: Download gguf file and make local model based on *Modelfile*
 
+# Troubleshoots
+####  Missmatch intepreter
+If after downloading everything but you still see errors like this
+<img width="1130" height="456" alt="image" src="https://github.com/user-attachments/assets/63592e0f-f8ff-47f8-b372-917762928cb0" />
 
+The problem is likely that there is a missmatch in your python interpreter.<br/>
+Look at the bottom bar and check the interpreter. If it is any version rather than 3.12, than change it to 3.12 <br/>
+From this </br>
+<img width="1092" height="100" alt="image" src="https://github.com/user-attachments/assets/d72ce003-a4ea-45ea-886d-521e60eb2bdf" />
+To this </br>
+<img width="1067" height="90" alt="image" src="https://github.com/user-attachments/assets/4e984b26-a53a-4525-84f1-591cc56d9b95" />
 
 
