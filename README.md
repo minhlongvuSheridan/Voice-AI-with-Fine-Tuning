@@ -71,7 +71,7 @@ If 5.9 Gib is too much for your GPU, consider switching Whisper ASR from medium 
     - ***Pytorch Kokoro***: 850 Mib
     - ***Whisper - Tiny***: 250 Mib<br/>
 
-If you are still short on the VRAM (assuming that you have GPU VRAM of 2Gib ). You can actually run the 4-bit quantized tinyLlama which only take around 850 Mib (detail in the tutorial).
+If you are still short on the VRAM (assuming that you have GPU VRAM of 2Gib ). You can actually run the 4-bit quantization TinyLlama which only take around 850 Mib (detail in the tutorial).
 -  **VRAM - GPU RAM**: ~~1.9 GiB
     - ***TinyLlama - 4-bit***: 850 Mib
     - ***Pytorch Kokoro TTS***: 850 Mib
