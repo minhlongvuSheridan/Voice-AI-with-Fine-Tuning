@@ -56,7 +56,13 @@ Other components:
 - ***main.py***: The main program that run the AI chat bot
 - ***requirements.txt***: Required dependencies for the program.
 # Notes Before You Run ⚠️
-
+- **disk storage**: The whole fully functional project took around 7.1 GB of 
+-  **VRAM - GPU RAM**:
+    - TinyLlama: 1358 Mib
+    - Pytorch Kokoro TTS: 850 Mib
+    - Whisper - Medium: 3871 Mib
+  Together they took around 5.9 Gib VRAM.
+If 5.9 Gib is too much for your GPU, consider switching Whisper ASR from medium to tiny version.  It is lighter and faster but in trade of performance (terrible for those with heavy accents). Tiny version only takes 243 Mib which contribute to a total of around 3 Gib VRAM
 # Run scripts 🚀
 - **Step 1:** Open command prompt terminal in your project folder
 - **Step 2**: Clone the project
@@ -115,5 +121,11 @@ From this </br>
 <img width="1092" height="100" alt="image" src="https://github.com/user-attachments/assets/d72ce003-a4ea-45ea-886d-521e60eb2bdf" />
 To this </br>
 <img width="1067" height="90" alt="image" src="https://github.com/user-attachments/assets/4e984b26-a53a-4525-84f1-591cc56d9b95" />
+
+#### Machine actively refuse
+If you are able to run but get crash while prompting or speaking and get the error like below
+<img width="1149" height="333" alt="image" src="https://github.com/user-attachments/assets/dd75d74d-5495-48f4-88f4-227857151363" />
+it is likely that you have not turn on the Ollama. Just open it on and the problem solved
+
 
 
