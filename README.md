@@ -4,17 +4,16 @@
 
 # Description 📝
 ### Objective
-The core objective of the project is to build an AI bot that could interact with users like a Gen Z friend. It is fully open source and runs completely offline with **zero API key**<br/><br/>
-The problem with the usual model is that it sounds too generic or polite, and their answer is quite long. Those problems could be solved with *prompt engineering*. However, when we want it to match exactly one very specific style of speaking, we need to provide a longer system prompt so it can learn from it.  Longer prompt means it has to consume more context window and time.<br/><br/>
-I don't want my model to read those system prompts every time I instruct something. Thus, I chose fine-tuning as an alternative for the heavy system prompt in this project. Fine-tuning with LoRA basically involves directly adjusting small portions of parameter weights to fit a specific task. As a result, it loses its generalization for general tasks but becomes specialized for narrow tasks. This is what makes it faster since it just reduces the massive system prompt overhead<br/><br/>
-To make it like a conversation between friends, I also use Automatic Speech Recognition (ASR) and Text-to-Speech (TTS) to enable the listening and speaking functionalities, respectively. 
-Based on the reflection of many conversations with my friends, I simply define Gen Z as those who frequently use Gen Z slang such as "cooked, pass, cap..." and always end sentences with emoticons such as :)), :<, :>... <br/>
+&emsp; The core objective of the project is to build an AI bot that could interact with users like a Gen Z friend. It is fully open source and runs completely offline with **zero API key**<br/><br/>
+&emsp; The problem with the usual model is that it sounds too generic or polite, and their answer is quite long. Those problems could be solved with *prompt engineering*. However, when we want it to match exactly one very specific style of speaking, we need to provide a longer system prompt so it can learn from it.  Longer prompt means it has to consume more context window and time.<br/><br/>
+&emsp; I don't want my model to read those system prompts every time I instruct something. Thus, I chose fine-tuning as an alternative for the heavy system prompt in this project. Fine-tuning with LoRA basically involves directly adjusting small portions of parameter weights to fit a specific task. As a result, it loses its generalization for general tasks but becomes specialized for narrow tasks. This is what makes it faster since it just reduces the massive system prompt overhead<br/><br/>
+&emsp; To make it like a conversation between friends, I also use Automatic Speech Recognition (ASR) and Text-to-Speech (TTS) to enable the listening and speaking functionalities, respectively. Based on the reflection of many conversations with my friends, I simply define Gen Z as those who frequently use Gen Z slang such as "cooked, pass, cap..." and always end sentences with emoticons such as :)), :<, :>... <br/>
 ### Architecture
 The figure below is the general workflow of the project <br/>
 <img width="1614" height="340" alt="image" src="https://github.com/user-attachments/assets/d7f5ce8d-1947-4cc5-a7b2-7e6120ac2d46" />
 
 The combination Whisper-Tinyllama-Kokoro (or WTK) was carefully chosen based on the trendings and the tutorials available.<br/>
-- ***Whisper***: The Whisper model is a stable and popular ASR model that is supported by OpenAI. In my experience, the medium is quite good at transcribing voice with an accent (me).<br/>
+- ***Whisper***: The Whisper model is a stable and popular ASR model that is supported by OpenAI. It comes with multiple sizes tiny, medium, large... In my experience, the medium is quite good at transcribing voice with an accent (me).<br/>
 
 - ***TinyLllama***: Ollama provides us with the opportunity to simplify the process of hosting LLM locally. It supports many models with a variety such as Llama2, gemma,.... However, since I just want to have a light and fast language model, TinyLlama is my top choice. TinyLlama, strictly speaking, is a small language model not an standard LLM like ChatGPT. SLM doesn't perform well on a massive dataset or prompt but it work well for specialized tasks. This makes it perfect for fine-tuning.<br/>
 
@@ -99,13 +98,22 @@ Other components:
   ```python
   python main.py
   ```
-
 # Make Your Own AI Voice 🤖🔊
 I have prepare the tutorial for this. But generally there are three steps:
 - Step 1: Create your own dataset
 - Step 2: Turn on T4 GPU on Google Colab and train based on *tinyllama_finetune.ipynb*
 - Step 3: Download gguf file and make local model based on *Modelfile*
 
+# Troubleshoots
+####  Missmatch intepreter
+If after downloading everything but you still see errors like this
+<img width="1130" height="456" alt="image" src="https://github.com/user-attachments/assets/63592e0f-f8ff-47f8-b372-917762928cb0" />
 
+The problem is likely that there is a missmatch in your python interpreter.<br/>
+Look at the bottom bar and check the interpreter. If it is any version rather than 3.12, than change it to 3.12 <br/>
+From this </br>
+<img width="1092" height="100" alt="image" src="https://github.com/user-attachments/assets/d72ce003-a4ea-45ea-886d-521e60eb2bdf" />
+To this </br>
+<img width="1067" height="90" alt="image" src="https://github.com/user-attachments/assets/4e984b26-a53a-4525-84f1-591cc56d9b95" />
 
 
