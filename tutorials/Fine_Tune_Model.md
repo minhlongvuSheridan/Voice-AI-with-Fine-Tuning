@@ -303,18 +303,28 @@ PARAMETER repeat_penalty 1.2
 PARAMETER num_predict 512
 PARAMETER top_p 0.9
 PARAMETER min_p 0.1
-PARAMETER num_ctx -1
+PARAMETER num_ctx 2048
 ```
-This [video](https://www.youtube.com/watch?v=jnikMver_CE) explai some concept about temperature 
+This [video](https://www.youtube.com/watch?v=jnikMver_CE) explai some concept about sampling strategies. Overall, those are four popular sampling strategies
 - **temperature**: So basiclly we scale the raw logits before applying the [softmax](https://letsdatascience.com/blog/llm-sampling-temperature-top-k-top-p-and-min-p-explained) to convert it to probabilties. Assume we have logit [1 2]. If we scale by 0.1 it will be come [10 20]. If we set termpareture by 0.3 and 0.6 it will be [3.3 6.7] and [1.7 3.3]. As we increase the temperature, the two logits get closer to each other. This mean that lower logit has higher chance to be sampling together with the hight logit. If we set it as 0 this basically greedy algorithm where it just take the highest one. If we set it extremely large then everything will be the same. Thus, if we want more **stable** choose **low temperature**. If we want more creative, choose **high temeperature**
 - **top_k**: Basically we choose k tokens that has highest probabilities. Recalculate the probabilties so total could be 1 again and then randomly sampling from them<br/>
   <img width="241" height="230" alt="image" src="https://github.com/user-attachments/assets/b6657d5e-9ecc-4276-8b5f-3f7dd2e50b9d" />
 
 - **top_p**: P here mean acummulative probability. We basically start from the highest and add the probability together with the top_p as upperbound. Then take those tokens and re calculate the probability to make it sum up to 1<br/>
-  <img width="250" height="250" alt="image" src="https://github.com/user-attachments/assets/a22d2f1e-8e24-43f4-89b8-3eedbb112188" />
+  <img width="250" height="250" alt="image" src="https://github.com/user-attachments/assets/a22d2f1e-8e24-43f4-89b8-3eedbb112188" /> <br/>
+Well the order in which one is executed first is not quite clear. I'll leave this to you to figure out
+- **min_p**: The idea is to filter out any tokens that can not pass a portion of the highest probability
+  <img width="726" height="461" alt="image" src="https://github.com/user-attachments/assets/9bfcfb73-55b9-4204-8379-8c675efea05f" /><br/><br/>
+  
+Parameters for limitation tokens:
+- ***num_ctx***: this basically the size of context window (both input and output).
+- ***num_predict***: this basically the maximum tokens to predict. Equivalent to ***max_new_tokens** <br/><br/>
 
-
-
+Parameters for repeatation penaty:
+- **repeat_last_n**: Basically how far (tokens) the model look back to determine which one is repeated word. If a word is still within n tokens, it is considered repetitve
+- **repeat_penalty**: This is basically a strategy how to deal with those repetitive words. similiar to temeprature, it will scale down the logit if a word is repeatitive. Thus a repat_penalty of 1 means disable.<br/>
+  If you set penalty less than 1, it will actually encourage a word to appear. Below I set the penalty to 0.7
+  <img width="1252" height="581" alt="image" src="https://github.com/user-attachments/assets/f0eebb30-6221-4fbf-bace-fa70084ef6cf" />
 
 
 
