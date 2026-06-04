@@ -294,7 +294,21 @@ Next it generate "What's the best workout?". This is literally the user prompt i
 Next it answer **Bruh, touching grass for real. /-_-**. It end with the emoticon so this is valid answer for that question. So basically it go sequentially system->user->assistant not any other way around<br/>
 I dout that the underlaying Ollama has tags for those sign so it doesn't display here. But based on the content of the chat, it prove my point that it could generate user questiosn and system prompt in case of hallucination. We are just lucky that the Ollama already handle it for us. 
 
-#### Temperature
+#### Determining token
+This is the section where we define our strategy of how to get the next token. Do we want the same answer everytime of little different one?
+```
+PARAMETER temperature 0.7
+PARAMETER top_k 5
+PARAMETER repeat_penalty 1.2
+PARAMETER num_predict 512
+PARAMETER top_p 0.9
+PARAMETER min_p 0.1
+PARAMETER num_ctx -1
+```
+This [video](https://www.youtube.com/watch?v=jnikMver_CE) explai some concept about temperature 
+- **temperature**: So basiclly we scale the raw logits before applying the softmax. Assume we have logit [1 2]. If we scale by 0.1 it will be come [10 20]. If we set termpareture by 0.3 and 0.6 it will be
+  [3.3 6.7] and [1.7 3.3]. As we increase the temperature, the two logits get closer to each other. This mean that lower logit has higher chance to be sampling together with the hight logit. If we set it as 0 this basically greedy algorithm where it just take the highest one. If we set it extremely large then everything will be the same. Thus, if we want more **stable** choose **low temperature**. If we want more creative, choose **high temeperature**
+
 
 
 
