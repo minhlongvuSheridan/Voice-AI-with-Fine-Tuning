@@ -216,8 +216,54 @@ we can see that there are two upper bounds for the output which could cause conf
 [This](https://oneuptime.com/blog/post/2026-02-02-ollama-custom-modelfiles/view) shows how we can customize the Modelfile 
 - ***we have the GGUF file right so what is this Modelfile?***: The GGUF file is what contains the core model and that is it. It job is only take the numerical input and output wide range of probabilities of number. That's it. What next word to choose is based on the strategy. Should it always take the highest one or also select those with close probabilities?. The Modelfile handle it for us. It structure the input format from the user and determine what should be the next token.  Also it also monitor when it the model should stop.
 #### Template
+```Go
+TEMPLATE "<|system|>
+{{ .System }}</s>
+<|user|>
+{{ .Prompt }}</s>
+<|assistant|>
+"
+SYSTEM """Your name is Jerry"""
+```
+As first this might look kinda aliean but when you get used to it, it is quite easy to see. </br>
+Basically this **TEMPLATE** is written in the [**Go template**](https://pkg.go.dev/text/template#Template). It is equipvalent to the f string in python. That ```{{ }}``` tell the Ollama that it must evaluate this. The **.** tell
+that take the value at the current position of data structure. Small different then python f string where Go combine the data ***struct*** to that string. Go must walk through that struct since it could have nested struct. The dot basically take the value at whever it is standing. Without it, it try to find function <br/>
+- {{ .System }}: This is the system prompt that we specify below using SYSTEM
+- {{ .Prompt }}: This is the prompt that you will input to the terminal or make the API call
+Anything else is similiar to what we have done in the step 3 <br/>
 
+Example: You prompt the terminal "How are you today". The ollama will send this string to the model
+```Go
+<|system|>
+Your name is Jerry</s>
+<|user|>
+How are you today</s>
+<|assistant|>
+```
+See nothing tricky it is just different syntax <br/> <br/>
+Note: you might see that some will have template like this
+```
+TEMPLATE "{{if .System }}<|system|>
+{{ .System }}</s>
+{{end}}<|user|>
+{{ .Prompt }}</s>
+<|assistant|>
+```
+This 
+```
+{{if .System }}
+...
+{{end}}
+```
+Basically tell that if there is exist non empty **System** in the current location, take everything inside, otherwise just don't print anything. This is simply an if condition.<br/>
+So if we take above example again. If would print
+```
+<|user|>
+How are you today}</s>
+<|assistant|>
+```
 #### Stop signs
+
 
 
 #### Temperature
