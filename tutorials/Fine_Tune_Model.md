@@ -6,7 +6,7 @@
 
 # Full Fine Tune, LoRA, QLoRa
 
-# Unsloth vs HuggingFace vs Lora
+# Unsloth vs HuggingFace vs Lora vs Google Colab
 
 
 
