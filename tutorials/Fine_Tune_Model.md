@@ -6,9 +6,18 @@
 
 # Full Fine Tune, LoRA, QLoRa
 
-# Unsloth vs HuggingFace vs Lora vs Google Colab
 
 
+# Google Colab vs HuggingFace vs  Unsloth vs LoRA 
+I guess if you are beginner, you might be overwhelm with those terminologies.
+- ***Google Colab***: this is the platform provided Google where you actually train your model. You borrow their virtual T4 GPU machine to train
+- ***Hugging Face***: This is platform where you download their models, libraries or even datasets. Think it as Github version of AI
+- ***Unsloth***: In short, [Unsloth](https://unsloth.ai/docs) is an open-source frame work for running and training LLMS.They are famous for making training process more efficient by decrese the time and storage. They also provide 
+  some efficients models on the Hugging Face
+- ***LoRA***: As explained above, LoRA is the trainning strategy that could reduce time and space needed.<br/>
+  
+**So how does everything come together?**
+We **borrow** the T4 computer with enough VRAM from the **Google Colab**. The Unsloth will control that computer to **download model** from the **Hugging Face**. Then Unsloth **train** that model using the **LoRA strategy** .
 
 # Step by Step Fine Tuning
 ### Step 1: Prepare your data
