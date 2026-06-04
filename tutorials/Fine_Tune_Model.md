@@ -1,7 +1,11 @@
 <h1 align="center">🔬 Fine Tune TinyLlama Model 🔬</h1>
 
-# Difference between System Prompt, Fine Tune, and RAG
-
+# Difference between System Prompt, Fine Tune, RAG, and Agent
+Well this basically what we hear all they. After researching for a while, this is what I could summarize
+- ***System Prompt***:
+- ***Fine Tune***:
+- ***RAG***:
+- ***Agent***:
 # Why choose Fine Tune 
 
 # Full Fine Tune, LoRA, QLoRa
