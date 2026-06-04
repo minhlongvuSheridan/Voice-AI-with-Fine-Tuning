@@ -270,13 +270,13 @@ PARAMETER stop <|user|>
 PARAMETER stop <|assistant|>
 PARAMETER stop </s>
 ```
-***Wait a minute, what do you mean by that. Doesn't it just stop???***: This was my question the first time I saw those and it is valid those. We need to know that the GGUF and Modefile work together to generate the next token based on the probabilities and thats it. Remember that when we train the model, we format it in this way
+***Wait a minute, what do you mean by that. Doesn't it just stop???**<br/> This was my question the first time I saw those and it is valid those. We need to know that the GGUF and Modefile work together to generate the next token based on the probabilities and thats it. Remember that when we train the model, we format it in this way
 ```python
 def format_prompt(row):
     return f"<|user|>\n" + row["input"] + "</s>\n<|assistant|>\n" + row["output"] + "</s>"
 ```
 See there is a stop sign ***\</s>*** at the end of the token. We basically tell the model that "Hey at the end of the answer add this sign". For us it is special sign, but for the model it is just regualar token. When it ends an meaningful speech, it will decicde "Hey based on whaever the fine tuning data is, the next LIKELY token should be \</s>". After print out that token, it continue to determine the next token. However, for us we know that this should be the end of its role. So we told Ollama that "Hey when you see this </s>, can you just stop the turn of model immediately". That is how it works.<br/><br/>
-***Okay so it start to generate right after |assistant| right? and stop when it generate \</s> so we use it as stop sign. But what are the points of all other stop signs ***: This is another valid question. If the model work perfectly fine, it always generate **\</s>** at the end. But what if it doesn't? We know that model AI could hallucinate. what if it doesn't stop at \</s>. What if it generate <|system|> and just go on. So basically this is the gaurds or back up plan in case everything is broken. <br/>
+***Okay so it start to generate right after |assistant| right? and stop when it generate \</s> so we use it as stop sign. But what are the points of all other stop signs***<br/> This is another valid question. If the model work perfectly fine, it always generate **\</s>** at the end. But what if it doesn't? We know that model AI could hallucinate. what if it doesn't stop at ***\</s>***. What if it generate <|system|> and just go on. So basically this is the gaurds or back up plan in case everything is broken. <br/>
 To prove my point, I will make some examples. Make model file with just the following  <br/> <br/>
 **Example**: 
 ```
