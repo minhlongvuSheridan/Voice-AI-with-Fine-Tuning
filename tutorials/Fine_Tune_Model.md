@@ -206,13 +206,22 @@ def generate_response(user_input):
   return final_output.split("<|assistant|>")[-1].strip()
 
 ```
-### what is the difference between max_new_tokens and max_sequence_length
+#### what is the difference between max_new_tokens and max_sequence_length
 - ***max_new_tokens*** is the upper bound for the output <br/>
 - ***max_sequence_length***: upper bound for both output + data + input<br/>
 
 we can see that there are two upper bounds for the output which could cause confusion. The model choose to use *max_new_tokens* which means they can generate if it already exceed the *max_sequence_length*
 
-#### Step 8: Download and make local file
+### Step 8: Download and make local file
 [This](https://oneuptime.com/blog/post/2026-02-02-ollama-custom-modelfiles/view) shows how we can customize the Modelfile 
+- ***we have the GGUF file right so what is this Modelfile?***: The GGUF file is what contains the core model and that is it. It job is only take the numerical input and output wide range of probabilities of number. That's it. What next word to choose is based on the strategy. Should it always take the highest one or also select those with close probabilities?. The Modelfile handle it for us. It structure the input format from the user and determine what should be the next token.  Also it also monitor when it the model should stop.
+#### Template
+
+#### Stop signs
+
+
+#### Temperature
+
+
 
 
