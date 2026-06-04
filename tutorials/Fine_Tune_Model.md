@@ -263,8 +263,36 @@ How are you today}</s>
 <|assistant|>
 ```
 #### Stop signs
-
-
+We need to specify the stop sign when it should stop
+```
+PARAMETER stop <|system|>
+PARAMETER stop <|user|>
+PARAMETER stop <|assistant|>
+PARAMETER stop </s>
+```
+***Wait a minute, what do you mean by that. Doesn't it just stop???***: This was my question the first time I saw those and it is valid those. We need to know that the GGUF and Modefile work together to generate the next token based on the probabilities and thats it. Remember that when we train the model, we format it in this way
+```python
+def format_prompt(row):
+    return f"<|user|>\n" + row["input"] + "</s>\n<|assistant|>\n" + row["output"] + "</s>"
+```
+See there is a stop sign ***\</s>*** at the end of the token. We basically tell the model that "Hey at the end of the answer add this sign". For us it is special sign, but for the model it is just regualar token. When it ends an meaningful speech, it will decicde "Hey based on whaever the fine tuning data is, the next LIKELY token should be \</s>". After print out that token, it continue to determine the next token. However, for us we know that this should be the end of its role. So we told Ollama that "Hey when you see this </s>, can you just stop the turn of model immediately". That is how it works.<br/><br/>
+***Okay so it start to generate right after |assistant| right? and stop when it generate \</s> so we use it as stop sign. But what are the points of all other stop signs ***: This is another valid question. If the model work perfectly fine, it always generate **\</s>** at the end. But what if it doesn't? We know that model AI could hallucinate. what if it doesn't stop at \</s>. What if it generate <|system|> and just go on. So basically this is the gaurds or back up plan in case everything is broken. <br/>
+To prove my point, I will make some examples. Make model file with just the following  <br/> <br/>
+**Example**: 
+```
+From tinyllama43.gguf
+TEMPLATE "<|system|>"
+SYSTEM """this is system prompt"""
+```
+Basically we discard our own prompt and tell the model to just generate whatever text next to "\<|system|>". The system prompt is just arbitrary non empty so it pass the implicit validation of Ollama.
+<img width="950" height="396" alt="image" src="https://github.com/user-attachments/assets/9b2e7259-a946-44e2-ade8-3f7f089028ad" />
+You can see that it did generate "Your name is Jerry". Yes this our System prompt. </br>
+Next it generate "What's the best workout?". This is literally the user prompt in the training data
+```
+ {"input": "What's the best workout?", "output": "Touching grass I guess lol /:>"},
+```
+Next it answer **Bruh, touching grass for real. /-_-**. It end with the emoticon so this is valid answer for that question. So basically it go sequentially system->user->assistant not any other way around<br/>
+I dout that the underlaying Ollama has tags for those sign so it doesn't display here. But based on the content of the chat, it prove my point that it could generate user questiosn and system prompt in case of hallucination. We are just lucky that the Ollama already handle it for us. 
 
 #### Temperature
 
