@@ -4,7 +4,7 @@
 
 # Description 📝
 ### Objective
-&emsp; The core objective of the project is to build an AI bot that could interact with users like a Gen Z friend. It is fully open source and runs completely offline with **zero API key**<br/><br/>
+&emsp; The core objective of the project is to build an AI bot that could interact with users like a Gen Z friend. It is fully open source and runs completely offline with **zero API cost**<br/><br/>
 &emsp; The problem with the usual model is that it sounds too generic or polite, and their answer is quite long. Those problems could be solved with *prompt engineering*. However, when we want it to match exactly one very specific style of speaking, we need to provide a longer system prompt so it can learn from it.  Longer prompt means it has to consume more context window and time.<br/><br/>
 &emsp; I don't want my model to read those system prompts every time I instruct something. Thus, I chose fine-tuning as an alternative for the heavy system prompt in this project. Fine-tuning with LoRA basically involves directly adjusting small portions of parameter weights to fit a specific task. As a result, it loses its generalization for general tasks but becomes specialized for narrow tasks. This is what makes it faster since it just reduces the massive system prompt overhead<br/><br/>
 &emsp; To make it like a conversation between friends, I also use Automatic Speech Recognition (ASR) and Text-to-Speech (TTS) to enable the listening and speaking functionalities, respectively. Based on the reflection of many conversations with my friends, I simply define Gen Z as those who frequently use Gen Z slang such as "cooked, pass, cap..." and always end sentences with emoticons such as :)), :<, :>... <br/>
@@ -20,9 +20,12 @@ The combination Whisper-Tinyllama-Kokoro (or WTK) was carefully chosen based on 
 - ***Kokoro***: The Kokoro TTS has quality voices and is really light with just **82 million parameters**. It support multiple languages such Japanese and Chinese. I like this because its voice sounds authentic and emotional to me. <br/>
 
 Other components:
+- ***Voice Activity Detection***: A basic self-implement class to detect whenever there is a voice.
 - ***Sounddevice***: This is just python library that help you record from the mic and speak from the speaker<br/>
 
 - ***Tkinter***: Library help create GUI to display the text
+
+### Latency Statistic
 
 # Demo 📊
 
@@ -56,6 +59,25 @@ Other components:
 - ***main.py***: The main program that run the AI chat bot
 - ***requirements.txt***: Required dependencies for the program.
 # Notes Before You Run ⚠️
+I ran this project on the 8 GB RTX 4060 Laptop GPU.
+- **Storage**: The whole fully functional project took around 7.1 GB of disk space.
+- **VRAM - GPU RAM**: ~~5.9 GiB
+    - ***TinyLlama***: 1358 Mib
+    - ***Pytorch Kokoro***: 850 Mib
+    - ***Whisper - Medium***: 3871 Mib<br/>
+    
+    
+If 5.9 Gib is too much for your GPU, consider switching Whisper ASR from medium to tiny version.  It is lighter and faster but in trade of performance (terrible for those with heavy accents). Tiny version only takes 250 Mib which contribute to a total of around 2.4 Gib VRAM
+-  **VRAM - GPU RAM**: ~~2.4 GiB
+    - ***TinyLlama***: 1358 Mib
+    - ***Pytorch Kokoro***: 850 Mib
+    - ***Whisper - Tiny***: 250 Mib<br/>
+
+If you are still short on the VRAM (assuming that you have GPU VRAM of 2Gib ). You can actually run the 4-bit quantization TinyLlama which only take around 850 Mib (detail in the tutorial).
+-  **VRAM - GPU RAM**: ~~1.9 GiB
+    - ***TinyLlama - 4-bit***: 850 Mib
+    - ***Pytorch Kokoro TTS***: 850 Mib
+    - ***Whisper - Tiny***: 250 Mib<br/>
 
 # Run scripts 🚀
 - **Step 1:** Open command prompt terminal in your project folder
@@ -115,5 +137,15 @@ From this </br>
 <img width="1092" height="100" alt="image" src="https://github.com/user-attachments/assets/d72ce003-a4ea-45ea-886d-521e60eb2bdf" />
 To this </br>
 <img width="1067" height="90" alt="image" src="https://github.com/user-attachments/assets/4e984b26-a53a-4525-84f1-591cc56d9b95" />
+
+#### Machine actively refuse
+If you are able to run but get crash while prompting or speaking and get the error like below
+<img width="1149" height="333" alt="image" src="https://github.com/user-attachments/assets/dd75d74d-5495-48f4-88f4-227857151363" />
+it is likely that you have not turn on the Ollama App. The reason is that we don't actually run the TinyLlama in our python script. The Ollama runs it and we just use API calls under the hood. We only actually runs the Whisper and Kokoro TTS in our python application<br/>
+Go to the Search bar and type "Ollama"<br/>
+<img width="415" height="124" alt="image" src="https://github.com/user-attachments/assets/1e1b0156-0b96-48aa-a502-d06cee63ff3a" />
+
+Just open it on and the problem solved
+
 
 
