@@ -40,10 +40,10 @@ input_entry.bind("<Return>",lambda e: user_long.create_chat(input_entry.get()))
 
 mic_ready = threading.Event()
 
-whisper_model = WhisperModel("medium.en", device="cuda", compute_type="float32")
+whisper_model = WhisperModel("tiny", device="cuda", compute_type="float32")
 # 2. INITIALIZE OLLAMA
 client = ollama.Client()
-model_name='genz'
+model_name='genz43'
 
 
 print("Loaded tinyllama")
