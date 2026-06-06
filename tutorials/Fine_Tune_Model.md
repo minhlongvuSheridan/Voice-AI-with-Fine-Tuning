@@ -1,16 +1,86 @@
 <h1 align="center">🔬 Fine Tune TinyLlama Model 🔬</h1>
 
-# Difference between System Prompt, Fine Tune, RAG, and Agent
+# Difference between Prompt Engineering, Fine Tune, RAG, and Agent
 Well this basically what we hear all they. After researching for a while, this is what I could summarize
-- ***System Prompt***:
-- ***Fine Tune***:
-- ***RAG***:
-- ***Agent***:
+- ***Prompt Engineering***: Create an effective prompt that could guide a model without expanding the existing knowledge or **twisting its parameters**. [Good prompt](https://www.ibm.com/think/topics/rag-vs-fine-tuning-vs-prompt-engineering) is to tell it what to do
+- ***RAG***: or called Retrieval Augmented Generation. It is architecture that connect LLM to other data sources. Basically speaking, there is a search system between user queury and LLM. This system will perform search based on the queury to check if any new knolwedge is required. Then it integrate to the user queury and send it to the LLM. This **expand the knowledge based**
+- ***Fine Tune***: fine tune is the process of re train the model on smaller dataset. Oppsite to prompt engineering, this twist the parameters of the model. We can add new knowledge to it but it is not really **expansion of knolwedge base** since we just trade of general knolwedge with specialized one due to modification in weights.
+- ***Agent***: This an system where the LLM function as a brain and it could interact with the world by automatically using external tool.
+
+**Metaphor between Fine Tuneing-RAG-Prompt**: 
+
+Consider that specialization is the medical. Fine tuning is just like a student spend ton of hours to practice (change weight) and learn new skill from the standard textbook. RAG is kinda like an library that give information to student to do something. the prompt engineering is basically the protocol or standard instructions of how to do something. Theoretically we only need RAG and Prompt Engineering to make LLM do something. However, if we let an medical student(Fine tune) and a physics student to prescribe an patient. We can imagine that the medical student do it in efficient way whereas physics student having trouble to follow instruction despite all the information (RAG) and instruction (Prompt) provided.
+
+**Metaphor between LLM and Agent**
+
+While a medical student (LLM) is limited by the instruction and they are only allowed to give avice(text). The licensed doctor (agent) could access to the external tools other than information(RAG) like scalpels,forceps, and surgical scissors to actually perform sugery on the patient. 
+
+
+
 # Why choose Fine Tune 
 
 # Full Fine Tune, LoRA, QLoRa
+To understand how LoRA works, we need to go all the way back of how the we train a simple neural network </br>
+
+#### Intrinsic Dimension
+Based on the definition in [here](https://arxiv.org/abs/2012.13255), instrinc dimensions represent a smallest subspace in which it still optimize the function with a certain error. For example, by fine tuning just 200 parameters, it could achieve 90% of fine tuning RoBERTa with full millions of parameter.
+
+Imperically, they found out that the larger in term of parameters of pre-trained model, the smaller of needed fine-tuning parameters will be. The smaller subspace doesn't need to be found mannually, they can be randomly projected. This prove one point that **really large pre-trained LLM actually need really small parameters in random subspace just to reach satisfactory solution** <br/>
 
 
+#### LoRA
+
+- ***[Hypothesis](https://arxiv.org/abs/2106.09685)***: General idea is that the update weight $\Delta W$ also has its intrinsic dimension. Which means that there **might exists** two matrices B and A such that $\Delta W = B.A$. 
+
+So it general we have
+$$W = W_0 + \Delta W = W_0 + B.A$$
+As explained in [here](https://mbrenndoerfer.com/writing/lora-hyperparameters-rank-alpha-target-modules?utm_source=chatgpt.com) say that 
+- **A** down projection maatrix which compress input into a subspace
+- **B** up-projection matrix which maps from subspace back to the origional dimension
+
+You can see that by project to subspace, it actually lose some information. But do remember that this is the intention. Remeber the idea of backpropagation is to walk down the hill. This mean that  when update the matrix A and B, we basically tell that "I dont care how many parameters orginal matrix W have, you matrix (**A**) need to figure out a way so that you extract most information from the input with limited space and you (**B**) figure out a most efficient way to use or recombine those information back to ".
+We have given it a task but **can it find it**? The [paper](https://arxiv.org/abs/2106.09685) tell us two things:
+- Even r = 1 could still produce considerable result of 60%. This mean it should produce acceptable result (not some thing like 20% or 30%)
+- It is might be possible for random sub spaces to produce similiar result. Remember the algebra class where row 1 could be linearly dependent to row n $r_1 = k. r_n$? We could actually rewrite row n is linearly dependent to row 1 $r_n = \frac{1}{k}r_1$. It doesn't matter if the row 1 is removed since we still have row n to represent the miss dimension. This means that if there exists a sub space A where it produce the most significant result and all other seem like dependt on it. if we are unluck on a sub space B, since B also depend on A. We could rewrite some part of B so that A depend on B (not always the case for non linear) and continue to find optimal position. It could be the case that all sub space A just depend on a rank on sub space A but it is okay since the above finding show that even $r=1$ could make some what result. The point I want to make that the insinct dimension is not necessasry just a single sub space.
+
+We can see that the $W$ is still used in the calculation but it is freezed which means its value doesn't change after any update. All the update go back to the ***B*** and ***A***. This means that there should be something like  this 
+
+$$A = A_0 - \eta \frac{\partial L}{\partial A}$$
+
+$$B = B_0 - \eta \frac{\partial L}{\partial B}$$
+
+$$y = W_0x + \frac{\alpha}{r}BAx$$
+
+Note here that the 
+- **Learning rate $\eta$** is for the speed of learning process of $B$ and $A$. 
+- **The alpha $\alpha$** is the scaling factor determine how strong of the update to the origional model
+- $r$ this is the number of rank
+
+
+
+
+For the regular adapter. It will be added into the main stream. For example if you have a module, flow will go from that module and then to the adapter. This adapter is what actually learn but it is also what increase the latency during inference time (more to flow). As we increase the complexity of adapter , it coverage to an MLP (which is worse than full fine tuning). 
+
+![alt text](image-1.png)
+
+For the LoRA, it add two matrices A and B parrallel for each target module. The forward pass will pass through it and AB same time to calculate the value. But when backpropagation, it flow through the chain of A and B. Result in only updating those matrices. As we increase complexity of A and B, size of A and B actually get closer to the size of origional matrix which mean that this is basically normal fine tuning
+![alt text](lora.png)
+
+Why it is efficient?
+There are 3 main benefits:
+- It can reduce the VRAM up to 2/3 since it doesn't have to store optimizer states for frozen parameter
+- Speed up fine tuning by 25% since it doesn't have to calculate gradient for major of parameters
+- We can switch tasks. Each task is a fine tuned model by just swapping the LoRA weights
+- It will merged to the origional weight so it doesn't introduce more latency at inference time like 
+
+**Small Example**: Assume an layer of LLM model has weight matrix of 4096x4096.
+- For **full fine tuning**: We literally have to train  $$4096*4096 = 16,777,216$$
+- **Apply LoRA** to this with the rank $r=64$. We will have matrix B of size  4096x64 and matrix A with the size 64x4096. So parameter we need to train is 
+$$4096*64+64 *4096 = 2 * 4096 * 64 = 524,288$$
+- The ratio 
+$$\frac{524,288}{16,777,216} = 3.125\%$$
+
+Yes just 3.125% of origional weight. We could decrease the rank as the model grow larger since more capacity model is pre trained enough for general task. They only need small adjustment to fit for specialized tasks. So the trick is small rank for large model and high rank for small model for specialized but not complex. However, for extremely complex task like new language, that strategy might be broken.
 
 # Google Colab vs HuggingFace vs  Unsloth vs LoRA 
 I guess if you are beginner, you might be overwhelm with those terminologies.
@@ -178,8 +248,8 @@ trainer = SFTTrainer(
 ```
 #### difference between epoch and batch
 Based on [this](https://machinelearningmastery.com/difference-between-a-batch-and-an-epoch/) <br/>
-- batch: Number of samples needed to be processed before an update weight
-- epoch: Number of times that it go through entire dataset<br/>
+- **batch**: Number of samples needed to be processed before an update weight
+- **epoch**: Number of times that it go through entire dataset<br/>
 
 so batch is inside the epoch and the one update weight is batch not epoch<br/>
 Example: if we have 100 rows. We set batch = 10 and epochs = 3<br/>
