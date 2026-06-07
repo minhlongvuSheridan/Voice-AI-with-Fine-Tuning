@@ -151,11 +151,14 @@ This is the problem with the latest version of Ollama server 0.30.x. Basically i
 <img width="1127" height="115" alt="image" src="https://github.com/user-attachments/assets/54e9e453-0e9a-41d9-89bc-46aaba2c81af" />
 instead it use shared memory which cause your application extremely for no reason. 
 You can see the discussion [here](https://github.com/ollama/ollama/issues/16536) <br/>
-Solution: Open cmd and set those:
-```
-set OLLAMA_VULKAN=0
-set OLLAMA_LLM_LIBRARY=cuda_v13
-```
+Solution: 
+- Open cmd and set those:
+  ```
+  set OLLAMA_VULKAN=0
+  set OLLAMA_LLM_LIBRARY=cuda_v13
+  ```
+- Then close the Ollama application
+- Start Ollama again
 
 
 
