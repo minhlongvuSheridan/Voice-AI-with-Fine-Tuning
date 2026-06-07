@@ -1,47 +1,54 @@
 <h1 align="center">🔬 Fine Tune TinyLlama Model 🔬</h1>
 
 # Difference between Prompt Engineering, Fine Tune, RAG, and Agent
-Well this basically what we hear all they. After researching for a while, this is what I could summarize
-- ***Prompt Engineering***: Create an effective prompt that could guide a model without expanding the existing knowledge or **twisting its parameters**. [Good prompt](https://www.ibm.com/think/topics/rag-vs-fine-tuning-vs-prompt-engineering) is to tell it what to do
-- ***RAG***: or called Retrieval Augmented Generation. It is architecture that connect LLM to other data sources. Basically speaking, there is a search system between user queury and LLM. This system will perform search based on the queury to check if any new knolwedge is required. Then it integrate to the user queury and send it to the LLM. This **expand the knowledge based**
-- ***Fine Tune***: fine tune is the process of re train the model on smaller dataset. Oppsite to prompt engineering, this twist the parameters of the model. We can add new knowledge to it but it is not really **expansion of knolwedge base** since we just trade of general knolwedge with specialized one due to modification in weights.
-- ***Agent***: This an system where the LLM function as a brain and it could interact with the world by automatically using external tool.
+&emsp;The title contains some hot keywords that one frequently hears every day. However, it is quite hard to imagine what the difference is between them. After researching for a while, this is what I could summarize.
+#### Brief Definitions
+- ***Prompt Engineering***: Create an effective prompt that could guide a model without expanding the existing knowledge or **twisting its parameters**. [Good prompt](https://www.ibm.com/think/topics/rag-vs-fine-tuning-vs-prompt-engineering) is to tell it what to do<br/><br/>
+- ***RAG***: or called Retrieval Augmented Generation. It is the architecture that connects LLM to other data sources. Basically speaking, there is a search system between the user query and the LLM. This system will perform a search based on the queury to check if any new knolwedge is required. Then it integrates the user query and sends it to the LLM. This **expand the knowledge base**<br/><br/>
 
-**Metaphor between Fine Tuneing-RAG-Prompt**: 
+- ***Fine-Tune***: Fine-tuning is the process of retraining the model on a smaller dataset. Opposite to prompt engineering, this twists the parameters of the model. We can add new knowledge to it, but it is not really an **expansion of knowledge base** since we just trade off general knowledge with specialized one due to modification in weights.<br/><br/>
+- ***Agent***: This is a system where the LLM functions as a brain, and it could interact with the world by automatically using an external tool.
 
-Consider that specialization is the medical. Fine tuning is just like a student spend ton of hours to practice (change weight) and learn new skill from the standard textbook. RAG is kinda like an library that give information to student to do something. the prompt engineering is basically the protocol or standard instructions of how to do something. Theoretically we only need RAG and Prompt Engineering to make LLM do something. However, if we let an medical student(Fine tune) and a physics student to prescribe an patient. We can imagine that the medical student do it in efficient way whereas physics student having trouble to follow instruction despite all the information (RAG) and instruction (Prompt) provided.
+#### Metaphor between Fine Tuneing-RAG-Prompt
+&emsp;Consider that specialization is in the medical field. Fine-tuning is just like a student spending tons of hours to practice (change weight) and learn new skills from the standard textbook. RAG is kinda like a library that gives information to a student to do something. The prompt engineering is basically the protocol or standard instructions of how to do something. Theoretically, we only need RAG and Prompt Engineering to make LLM do something. However, imagine we let a medical student(Fine tune) and a physics student prescribe to a patient. Obviously,  the medical students do it in an efficient way, whereas physics students have trouble following instructions despite all the information (RAG) and instructions (Prompt) provided.
 
-**Metaphor between LLM and Agent**
-
-While a medical student (LLM) is limited by the instruction and they are only allowed to give avice(text). The licensed doctor (agent) could access to the external tools other than information(RAG) like scalpels,forceps, and surgical scissors to actually perform sugery on the patient. 
+#### Metaphor between LLM and Agent
+&emsp;While a medical student (LLM) is limited by the instruction and they are only allowed to give advice (text). The licensed doctor (agent) could access the external tools other than information(RAG), like scalpels, forceps, and surgical scissors to actually perform surgery on the patient. 
 
 
 
 # Why choose Fine Tune 
+When it comes to our project, one could argue that why you don't choose the system prompt rather than this headache fine-tuning. It is actually a valid question since the system prompt is a lot easier. However, I chose fine-tuning due to the following reasons
+- My model is **TinyLlama** which small language model. It doesn't work well with the system prompt. 
+- My chatbot is a **real-time conversational chatbot**, so it requires the lowest latency. The system prompt would make it longer to digest those prompts. 
+- Save the **context window size** for future short-term memory.
+- To match with **very specific style**. The system prompt of Llama 3.2 works really well with a somewhat general style of Gen Z. But what if I want it to match a very specific style? If I want to do it, I would have to provide many specific examples. That would explode my context window size
+
+Okay, to sum up, TinyLlama doesn't **work well** with System Prompt, and even if it works, it could **digest** more **time** and **context size**. That is why I chose fine-tuning for this project. I would suggest combining both techniques to get the best of both worlds
+
 
 # Full Fine Tune, LoRA, QLoRa
-To understand how LoRA works, we need to go all the way back of how the we train a simple neural network </br>
+To understand how LoRA works, there are two main requirements: backpropagation and intrinsic dimension. I have provided a really brief example of backpropagation of a neural network at [Neural_Network.md](Neural_Network.md). Basically, backpropagation tell us whether we should increase or decrease a specific weight in order to get the minimum Loss.</br>
 
 #### Intrinsic Dimension
-Based on the definition in [here](https://arxiv.org/abs/2012.13255), instrinc dimensions represent a smallest subspace in which it still optimize the function with a certain error. For example, by fine tuning just 200 parameters, it could achieve 90% of fine tuning RoBERTa with full millions of parameter.
+Overall, intrinsic dimensions represent the number of dimensions needed in subspace to reach 90% performance of full dimensions. In the [paper](https://arxiv.org/abs/1804.08838) they found out that they only need to train around 700 dimensions of a network 200k parameters and they could still produce result equal 90% accuracy of full training with 200k dimensions. Basically, they prove that dimension needed for trainign is not always equal to number of parameters and many time it is surprising low.
 
-Imperically, they found out that the larger in term of parameters of pre-trained model, the smaller of needed fine-tuning parameters will be. The smaller subspace doesn't need to be found mannually, they can be randomly projected. This prove one point that **really large pre-trained LLM actually need really small parameters in random subspace just to reach satisfactory solution** <br/>
+another [paper](https://arxiv.org/abs/2012.13255) empirically found out that the larger the parameters of the pre-trained model, the smaller the number of dimensions needed to solve the problem compared to their huge parameters(not other). They observed they only need to fine tune 200 dimensions for the ROBERTa-Large whereas ROBERTa-base(smaller) need around 900. Their rationale is that larger model minimize the knowledge needed to learn since they already have it. The metaphor could be that of a smart student who only needs a few hours of learning instead of days since he already know most of the concepts.  This show one point that **really large pre-trained LLM actually need really small trainable dimensions in a random subspace just to reach a satisfactory solution** <br/>
 
 
-#### LoRA
+#### LoRA - Low-rank Adaption
+the Low-rank here refers to the fact the it will happen at smaller rank or sub space. What make LoRA differ is that instead of having fixed P, they have two trainable matrices.
 
-- ***[Hypothesis](https://arxiv.org/abs/2106.09685)***: General idea is that the update weight $\Delta W$ also has its intrinsic dimension. Which means that there **might exists** two matrices B and A such that $\Delta W = B.A$. 
-
+***[Hypothesis](https://arxiv.org/abs/2106.09685)***: The authors were inpsired that there were intrisic dimensions for. Thus, they expand this further by hypotehsizing that the update weight $\Delta W$ also has its intrinsic dimension not just origional weight $W$. Their technique is to decompose the update weight matrix into two matrices B and A. This means that 
+$$\Delta W_{m,n} = B_{n, r}.A_{r, m}$$
+where r< m,n. Usually m = n
 So it general we have
 $$W = W_0 + \Delta W = W_0 + B.A$$
 As explained in [here](https://mbrenndoerfer.com/writing/lora-hyperparameters-rank-alpha-target-modules?utm_source=chatgpt.com) say that 
-- **A** down projection maatrix which compress input into a subspace
+- **A** down projection matrix which compress input into a subspace
 - **B** up-projection matrix which maps from subspace back to the origional dimension
 
-You can see that by project to subspace, it actually lose some information. But do remember that this is the intention. Remeber the idea of backpropagation is to walk down the hill. This mean that  when update the matrix A and B, we basically tell that "I dont care how many parameters orginal matrix W have, you matrix (**A**) need to figure out a way so that you extract most information from the input with limited space and you (**B**) figure out a most efficient way to use or recombine those information back to ".
-We have given it a task but **can it find it**? The [paper](https://arxiv.org/abs/2106.09685) tell us two things:
-- Even r = 1 could still produce considerable result of 60%. This mean it should produce acceptable result (not some thing like 20% or 30%)
-- It is might be possible for random sub spaces to produce similiar result. Remember the algebra class where row 1 could be linearly dependent to row n $r_1 = k. r_n$? We could actually rewrite row n is linearly dependent to row 1 $r_n = \frac{1}{k}r_1$. It doesn't matter if the row 1 is removed since we still have row n to represent the miss dimension. This means that if there exists a sub space A where it produce the most significant result and all other seem like dependt on it. if we are unluck on a sub space B, since B also depend on A. We could rewrite some part of B so that A depend on B (not always the case for non linear) and continue to find optimal position. It could be the case that all sub space A just depend on a rank on sub space A but it is okay since the above finding show that even $r=1$ could make some what result. The point I want to make that the insinct dimension is not necessasry just a single sub space.
+You can see it here, instead of projecting the input to the full space $\Delta W$, the input is [down projected](https://mbrenndoerfer.com/writing/lora-concept-low-rank-adaptation-efficient-llm-fine-tuning) from k dimension into r dimension. Then it is converted to the d dimension. While being comprressed into r, it lose some information. But do remember that this is the intention. Remeber the idea of backpropagation is always trying to find the optimal solution. And the above paper also explain that already known knowedge would be filtered out. This mean that  when update the matrix A and B, we basically tell that "I dont care how many parameters orginal matrix W have, you matrix (**A**) need to figure out a way so that you extract most useful and new information from the input for the task by squeezing it and you (**B**) figure out a most efficient way to decompress and combine those information back to output space". 
 
 We can see that the $W$ is still used in the calculation but it is freezed which means its value doesn't change after any update. All the update go back to the ***B*** and ***A***. This means that there should be something like  this 
 
@@ -53,7 +60,7 @@ $$y = W_0x + \frac{\alpha}{r}BAx$$
 
 Note here that the 
 - **Learning rate $\eta$** is for the speed of learning process of $B$ and $A$. 
-- **The alpha $\alpha$** is the scaling factor determine how strong of the update to the origional model
+- **The alpha $\alpha$** is the scaling factor determine how strong of the BA update relative to the orgional model 
 - $r$ this is the number of rank
 
 
