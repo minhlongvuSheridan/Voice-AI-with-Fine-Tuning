@@ -1,9 +1,4 @@
-measures/prompt_ollama.txt
-transcribe_whisper.txt
-tts_kokoro.txt
-
-
+measures/*.txt
 /.dist
 venv
 __pycache__
-
