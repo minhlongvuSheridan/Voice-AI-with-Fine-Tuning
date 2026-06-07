@@ -61,10 +61,12 @@ Note here that the
 
 For the regular adapter. It will be added into the main stream. For example if you have a module, flow will go from that module and then to the adapter. This adapter is what actually learn but it is also what increase the latency during inference time (more to flow). As we increase the complexity of adapter , it coverage to an MLP (which is worse than full fine tuning). 
 
-![alt text](image-1.png)
+<img width="816" height="198" alt="image-1" src="https://github.com/user-attachments/assets/124bc1ed-87d2-4054-a507-b1bc8ccbbe13" />
+
 
 For the LoRA, it add two matrices A and B parrallel for each target module. The forward pass will pass through it and AB same time to calculate the value. But when backpropagation, it flow through the chain of A and B. Result in only updating those matrices. As we increase complexity of A and B, size of A and B actually get closer to the size of origional matrix which mean that this is basically normal fine tuning
-![alt text](lora.png)
+
+<img width="375" height="335" alt="lora" src="https://github.com/user-attachments/assets/c1b1950a-bd4a-4e41-9bc8-95f4b6da95fd" />
 
 Why it is efficient?
 There are 3 main benefits:
