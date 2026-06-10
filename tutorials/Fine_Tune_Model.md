@@ -1,5 +1,51 @@
 <h1 align="center">🔬 Fine Tune TinyLlama Model 🔬</h1>
 
+# Table of Contents
+
+<small>
+
+- [1. Difference between Prompt Engineering, Fine Tune, RAG, and Agent](#1-difference-between-prompt-engineering-fine-tune-rag-and-agent)
+  - [1.1 Brief Definitions](#11-brief-definitions)
+  - [1.2 Metaphor between Fine Tuneing-RAG-Prompt](#12-metaphor-between-fine-tuneing-rag-prompt)
+  - [1.3 Metaphor between LLM and Agent](#13-metaphor-between-llm-and-agent)
+- [2. Why choose Fine Tune?](#2-why-choose-fine-tune)
+- [3. LoRA](#3-lora)
+  - [3.1 Intrinsic Dimension](#31-intrinsic-dimension)
+  - [3.2 LoRA - Low-rank Adaptation](#32-lora---low-rank-adaptation)
+  - [3.3 Adapter vs LoRA](#33-adapter-vs-lora)
+  - [3.4 Why LoRA is efficient?](#34-why-lora-is-efficient)
+- [4. LoRA vs QLoRA](#4-lora-vs-qlora)
+  - [4.1 FP16 vs BF16](#41-fp16-vs-bf16)
+  - [4.2 Model Size Estimation](#42-model-size-estimation)
+  - [4.3 8 bit quantization](#43-8-bit-quantization)
+    - [4.3.1 Why do we need quantization?](#431-why-do-we-need-quantization)
+    - [4.3.2 Symmetric Quantization](#432-symmetric-quantization)
+    - [4.3.3 Asymmetric Quantization](#433-asymmetric-quantization)
+    - [4.3.4 Error from Quantization](#434-error-from-quantization)
+    - [4.3.5 LLM.int8()](#435-llmint8)
+  - [4.4 QLoRA](#44-qlora)
+- [5. File Format](#5-file-format)
+  - [5.1 GGUF](#51-gguf)
+  - [5.2 How to read GGUF](#52-how-to-read-gguf)
+    - [5.2.1 Legacy format](#521-legacy-format)
+    - [5.2.2 Modern K-quant](#522-modern-k-quant)
+  - [5.3 PyTorch vs ONNX vs Safetensors vs GGUF](#53-pytorch-vs-onnx-vs-safetensors-vs-gguf)
+  - [5.4 Google Colab vs HuggingFace vs Unsloth vs LoRA vs llama.cpp vs Ollama](#54-google-colab-vs-huggingface-vs-unsloth-vs-lora-vs-llamacpp-vs-ollama)
+- [6. Step by Step Fine Tuning](#6-step-by-step-fine-tuning)
+  - [Step 1: Prepare your data](#step-1-prepare-your-data)
+  - [Step 2: Open the Google Colab](#step-2-open-the-google-colab)
+  - [Step 3: Load and process the data](#step-3-load-and-process-the-data)
+  - [Step 4: Load the model using Unsloth](#step-4-load-the-model-using-unsloth)
+  - [Step 5: Add LoRA](#step-5-add-lora)
+  - [Step 6: Add Trainer and train](#step-6-add-trainer-and-train)
+  - [Step 7: Test your model](#step-7-test-your-model)
+  - [Step 8: Download and make a local file](#step-8-download-and-make-a-local-file)
+    - [8.1 Template](#81-template)
+    - [8.2 Stop signs](#82-stop-signs)
+    - [8.3 Determining token](#83-determining-token)
+
+</small>
+
 # 1. Difference between Prompt Engineering, Fine Tune, RAG, and Agent
 &emsp;The title contains some hot keywords that one frequently hears every day. However, it is quite hard to imagine what the difference is between them. After researching for a while, this is what I could summarize.
 ### 1.1 Brief Definitions
