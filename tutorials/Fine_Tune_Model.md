@@ -105,7 +105,7 @@ LoRA reduces memory usage by only training a small number of dimensions. However
 
 &emsp;Both FP16 and BF16 use 16 bits to represent floating-point numbers. The key difference lies in how those bits are allocated:
 
-![alt text](image-2.png)
+<img width="836" height="411" alt="Image" src="https://github.com/user-attachments/assets/94fd0b8e-a23d-485f-88ed-a367414b8bb9" />
 
 &emsp;Briefly speaking, FP16 offers good precision with a 10-bit fraction (mantissa) but has a relatively small range due to its 5-bit exponent. On the other hand, BF16 has lower precision with just a 7-bit fraction, but matches the wide range of FP32 by utilizing an 8-bit exponent. Because it prevents underflow and overflow issues during training, BF16 is widely favored for [machine learning tasks](https://en.wikipedia.org/wiki/Bfloat16_floating-point_format).
 
@@ -129,12 +129,12 @@ $$Size = \frac{P \times B}{8 \times 1000^3} \text{ (GB)}$$
 **Example 1 - TinyLlama-1.1B-Chat-v1.0**: TinyLlama has a total of 1.1B parameters and uses BF16. What is its lowest estimated size? 
 We have $P = 1.1 \times 10^9$ and $B = 16$. Since it is a relatively small model, we will calculate the size in GB:
 $$Size = \frac{1.1 \times 10^9 \times 16}{8 \times 1000^3} = 2.2 \text{ (GB)}$$
-![alt text](image-3.png)
+<img width="1647" height="852" alt="Image" src="https://github.com/user-attachments/assets/1177f357-51c7-4c07-9f10-d69976d4c040" />
 The result matches its safetensors file size exactly.
 
 **Example 2 - Llama-3.2-3B-Instruct**: Despite the name, Llama 3.2 3B actually has $3.21\text{B}$ parameters, and its tensor type is 16-bit. So we have $P = 3.21 \times 10^9$ and $B = 16$:
 $$Size = \frac{3.21 \times 10^9 \times 16}{8 \times 1000^3} = 6.42 \text{ (GB)}$$
-![alt text](image-4.png)
+<img width="1678" height="762" alt="Image" src="https://github.com/user-attachments/assets/2e1ff89b-d200-4a25-b70d-53a18f2fa112" />
 Adding up its two safetensors files ($4.97 + 1.46 = 6.43\text{ GB}$) shows that they are basically the same size.
 
 ### 4.3 8 bit quantization
@@ -167,7 +167,8 @@ $$\epsilon = 0.5 \times s = \frac{\max(|x|)}{2 \times 127}$$
 $$\alpha = \max(|x|) = 20$$
 - **Step 2**: Find the scaling factor:
 $$s = \frac{20}{127} \approx 0.15748$$
-- **Step 3**: Calculate the quantized array:
+- **Step 3**: Calculate the quantized array:<br/>
+
 $$\mathbf{\text{quantized}} = \text{round}\left(\frac{1}{s} \cdot \begin{bmatrix}-3 & -7 & 9 & 10 & -20\end{bmatrix}\right) = \begin{bmatrix}-19 & -44 & 57 & 64 & -127\end{bmatrix}$$
 - **Step 4**: Calculate the maximum possible error:
 $$\epsilon = 0.5 \times \frac{20}{127} \approx 0.0787$$
@@ -212,13 +213,13 @@ $$\epsilon = 0.5 \times \frac{300}{127} \approx 1.18$$
 - For the remaining normal values, perform standard high-efficiency matrix multiplication in INT8.
 - Combine (dequantize and sum) the results of both paths back into a final FP16 activation matrix.
 
-![alt text](image-8.png)
+<img width="851" height="571" alt="Image" src="https://github.com/user-attachments/assets/bb9bed61-9661-4f56-b24f-e87afc8de7f7" />
 
 &emsp;At this point, we have a solid general understanding of how quantization works. While specific implementations may vary slightly, we are now ready to dive into QLoRA.
 ### 4.4 QLoRA
 &emsp;QLoRA, or Quantized Low-Rank Adaptation, is a technique used to apply LoRA to a 4-bit quantized base model. The thing is that they don't use something like INT4, where each value has equal space. They use a new format called 4-bit NormalFloat.
 
-![alt text](image-9.png)
+<img width="851" height="571" alt="Image" src="https://github.com/user-attachments/assets/00644b01-10d0-4ea1-aa22-dc102b01da06" />
 
 &emsp;As you can see above, the closer to 0, the shorter the space is. Remember the way we calculate the error based on the gap between two integers? The same thing applies here: a smaller gap results in a smaller error. This means that there is less loss of information if the nature of the data concentrates around 0, whereas outliers will have a larger error. As pointed out by the authors of [QLoRA](https://factory.fpt.ai/ai-insights/lora-vs-qlora#:~:text=During%20a%20QLoRA%20training%20run,through%20the%20LoRA%20adapter%20matrices.), the weights are roughly normally distributed. Thus, it makes the NormalFloat naturally fit with the weights.
 
@@ -457,7 +458,7 @@ $$Global = gradient\_accumulation * num\_gpus * each\_gpu\_batch\_size$$
 - ***weight_decay***: An L2 regularization technique to prevent overfitting. Basically, it adds a new penalty term to the loss function that is proportional to the sum of the squared weights. This penalizes weights from growing too large, which is a common sign of overfitting. The value of **weight_decay** is the coefficient $\lambda$ of this sum:
 $$Loss = Training\_Loss + \lambda \sum (w^2)$$
 - ***lr_scheduler_type***: A learning rate [scheduler](https://machinelearningmastery.com/a-gentle-introduction-to-learning-rate-schedulers/) is a technique that monitors the learning rate and adjusts it over time. This means the learning rate is not a fixed number. A [linear](https://huggingface.co/docs/transformers/v5.10.2/en/main_classes/optimizer_schedules#transformers.get_linear_schedule_with_warmup) scheduler first increases the learning rate during the warmup phase and then decreases it linearly to zero at the last training step.
-![alt text](image-10.png)
+<img width="803" height="191" alt="Image" src="https://github.com/user-attachments/assets/8b39777b-abc1-4bab-add7-b8f6b7f9c8b3" />
 - ***save_strategy***: When to save a copy of the model to the folder.
   - `None`: No save.
   - `epoch`: At the end of each epoch.
