@@ -265,7 +265,7 @@ $$\epsilon = 0.5 \times \frac{300}{127} \approx 1.18$$
 ### 4.4 QLoRA
 &emsp;QLoRA, or Quantized Low-Rank Adaptation, is a technique used to apply LoRA to a 4-bit quantized base model. The thing is that they don't use something like INT4, where each value has equal space. They use a new format called 4-bit NormalFloat.
 
-<img width="851" height="571" alt="Image" src="https://github.com/user-attachments/assets/00644b01-10d0-4ea1-aa22-dc102b01da06" />
+<img width="991" height="311" alt="Image" src="https://github.com/user-attachments/assets/9737688b-b8da-4cab-b769-1621b7dab547" />
 
 &emsp;As you can see above, the closer to 0, the shorter the space is. Remember the way we calculate the error based on the gap between two integers? The same thing applies here: a smaller gap results in a smaller error. This means that there is less loss of information if the nature of the data concentrates around 0, whereas outliers will have a larger error. As pointed out by the authors of [QLoRA](https://factory.fpt.ai/ai-insights/lora-vs-qlora#:~:text=During%20a%20QLoRA%20training%20run,through%20the%20LoRA%20adapter%20matrices.), the weights are roughly normally distributed. Thus, it makes the NormalFloat naturally fit with the weights.
 
