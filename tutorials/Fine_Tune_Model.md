@@ -287,10 +287,10 @@ GGUF provides some common [options](https://www.ibm.com/think/topics/gguf-versus
 
 &emsp;The special thing about GGUF is that it is just a [single file](https://apxml.com/posts/gguf-explained-llm-file-format) that contains all the metadata and the weights. It is flexible since we can change the metadata of it without crashing older programs.
 ### 5.2 How to read GGUF
-The quantization scheme starts with a **Q** which stands for Quantized, followed by a number that represents the average bits for each weight (with some exceptions). Examples include Q4, Q5, and Q3. It has many formats, but we should notice two primary types:
+&emsp;The quantization scheme starts with a **Q** which stands for Quantized, followed by a number that represents the average bits for each weight (with some exceptions). Examples include Q4, Q5, and Q3. It has many formats, but we should notice two primary types:
 
 #### 5.2.1 Legacy format
-These are the formats that end with `_0` or `_1`. They implement classic per-block linear quantization.
+&emsp;These are the formats that end with `_0` or `_1`. They implement classic per-block linear quantization.
 - **_0 (Symmetric)**: One scale factor per block.
 - **_1 (Asymmetric)**: One scale factor and an offset (zero point) per block.
 - **Advantage**: Simple and fast.
@@ -299,7 +299,7 @@ These are the formats that end with `_0` or `_1`. They implement classic per-blo
 Notice: The Q8_0 has minimal losses for the majority of LLMs, so it is still widely used.
 
 #### 5.2.2 Modern K-quant
-This has the general format `Q[bits]_K_[Size]`. It also applies double quantization similar to QLoRA, where it quantizes the blocks of weights first and then quantizes the factors of those blocks. The detailed implementation might be different. 
+&emsp;This has the general format `Q[bits]_K_[Size]`. It also applies double quantization similar to QLoRA, where it quantizes the blocks of weights first and then quantizes the factors of those blocks. The detailed implementation might be different. 
 There are three sizes:
 - **S - Small Size**: Almost the same thing as the specified bits. This has the smallest file size.
 - **M - Medium Size**: Raises some precision to higher bits for certain sensitive tensors. This is generally recommended.
@@ -318,7 +318,7 @@ In K-quant, the most popular option is **Q4_K_M**:
 
 
 # 5.4 Google Colab vs HuggingFace vs Unsloth vs LoRA vs llama.cpp vs Ollama
-I guess if you are a beginner, you might be overwhelmed by these terminologies.
+&emsp;I guess if you are a beginner, you might be overwhelmed by these terminologies.
 - ***Google Colab***: This is a platform provided by Google where you actually train your model. You borrow their virtual T4 GPU machines to train.
 - ***Hugging Face***: This is a platform where you download models, libraries, or even datasets. Think of it as the GitHub version of AI.
 - ***Unsloth***: In short, Unsloth is an open-source framework for running and training LLMs. They are famous for making the training process more efficient by decreasing the time and VRAM needed. They also provide some efficient models on Hugging Face.
@@ -327,15 +327,15 @@ I guess if you are a beginner, you might be overwhelmed by these terminologies.
 - **Ollama**: An open-source platform (not a library) that helps run models locally. It actually runs llama.cpp under the hood for GGUF models. You can think of it as a wrapper that simplifies all configurations for you.
 
 **So how does everything come together?**
-We **borrow** a T4 computer with enough VRAM from **Google Colab**. Unsloth will control that computer to **download a model** from **Hugging Face**. Then, Unsloth **trains** that model using the **LoRA strategy**. After that, we export the quantized model using **llama.cpp**. Finally, we run it locally using **Ollama**.
+&emsp;We **borrow** a T4 computer with enough VRAM from **Google Colab**. Unsloth will control that computer to **download a model** from **Hugging Face**. Then, Unsloth **trains** that model using the **LoRA strategy**. After that, we export the quantized model using **llama.cpp**. Finally, we run it locally using **Ollama**.
 
 
 # 6 Step by Step Fine Tuning
 ### Step 1: Prepare your data
-The model is only as good as the data. I remember the first time I fine-tuned my model, I was so obsessed with using the terms "cooked" and "lame" to make it funny. This was the main culprit that made my dataset unbalanced. As a result, the model always told me "you're so cooked" or "you are so lame" regardless of what I said. Additionally, I gave 6 examples of "to be cooked" but only 1 example of "to cook," so it couldn't understand the difference between them. </br></br>
+&emsp;The model is only as good as the data. I remember the first time I fine-tuned my model, I was so obsessed with using the terms "cooked" and "lame" to make it funny. This was the main culprit that made my dataset unbalanced. As a result, the model always told me "you're so cooked" or "you are so lame" regardless of what I said. Additionally, I gave 6 examples of "to be cooked" but only 1 example of "to cook," so it couldn't understand the difference between them. </br></br>
 
-The general idea of fine-tuning is to provide a set of pairs consisting of an input and an output. The input is the prompt that you might ask, and the output is your expected answer from the model if you prompt that input. You can format the data file in any way you want since we will have to load and pre-process it later. However, the more organized it is, the less work we have to do later. <br/>
-Create a file named ***genz.jsonl***. This file is an array of JSON inputs and outputs.
+&emsp;The general idea of fine-tuning is to provide a set of pairs consisting of an input and an output. The input is the prompt that you might ask, and the output is your expected answer from the model if you prompt that input. You can format the data file in any way you want since we will have to load and pre-process it later. However, the more organized it is, the less work we have to do later. <br/>
+&emsp;Create a file named ***genz.jsonl***. This file is an array of JSON inputs and outputs.
 ```json
 [
  {"input":"what is the vibe for today", "output":"might be chilling and touching some grass /~_~"},
@@ -343,12 +343,12 @@ Create a file named ***genz.jsonl***. This file is an array of JSON inputs and o
  {"input": "I just want to be an NPC today", "output": "total NPC day, honestly valid /-_-"},
 ]
 ```
-To adapt the style, I guess we might need 100~1000 pairs. Try to ensure the consistency of the tone in your samples. Don't let any specific keyword dominate others in terms of quantity
+&emsp;To adapt the style, I guess we might need 100~1000 pairs. Try to ensure the consistency of the tone in your samples. Don't let any specific keyword dominate others in terms of quantity
 unless you intend to do so. 
 ### Step 2: Open the Google Colab
-You can train the model directly on your machine. I did try it, but the chain dependencies were broken like crazy for me so Google Colab is my savior. It provides you with 5 hours of free
+&emsp;You can train the model directly on your machine. I did try it, but the chain dependencies were broken like crazy for me so Google Colab is my savior. It provides you with 5 hours of free
 their 15 GB T4 GPU<br/>
-Go to Google Colab and create a new notebook. Click on Run Time-> Change Run Time Type -> T4 <br/>
+&emsp;Go to Google Colab and create a new notebook. Click on Run Time-> Change Run Time Type -> T4 <br/>
 <img width="689" height="354" alt="image" src="https://github.com/user-attachments/assets/142908e2-e8ba-4eea-8131-a97824320e41" /> <br/>
 Then run this command to install required dependencies
 ```python
@@ -361,20 +361,20 @@ Then run this command to install required dependencies
 - **bitsandbytes**: The [Bitsandbytes](https://huggingface.co/docs/bitsandbytes/index) library provides k-bit quantization functions. Unsloth utilizes it under the hood, so we only need to pass it as a configuration parameter.
 
 
-It might take some time. When it is done, it will ask you whether you want to restart the session. click on ***restart session***
+&emsp;It might take some time. When it is done, it will ask you whether you want to restart the session. click on ***restart session***
 <img width="624" height="293" alt="image" src="https://github.com/user-attachments/assets/d33871d9-1a68-4b10-9dca-7d349cbd9940" />
 
 ### Step 3: Load and process the data
-First, we need to load our dataset. Click on Files->Upload to session storage. Then choose your file
+&emsp;First, we need to load our dataset. Click on Files->Upload to session storage. Then choose your file
 <img width="640" height="608" alt="image" src="https://github.com/user-attachments/assets/0cbfc2b4-cc2c-448a-a918-f65edc80e20c" />
 We just load data into storage. We need to load the data into the environment and parse it 
 ```python
 import json
 file = json.load(open("genz0.jsonl", "r"))
 ```
-Now we have an array of JSONs. However, as I said earlier, this format is for understandability but not suitable for fine-tuning. The reason is that the model is pre-trained based on a specific conventional format. The model now only understands that format, and it will function poorly if you switch to another format. Thus, we have to strictly follow the pre-trained model's format, unless we train the model from scratch. A funny metaphor could be a mathematics student who is always trying to find the axioms and theorems needed to compute a simple derivative, while a physics student, on the other hand, just basically computes it. It is the same problem but with a different pre-trained style (format). The result would be devastating if you asked a physics student to do it math-style, and vice versa.<br/> <br/>
+&emsp;Now we have an array of JSONs. However, as I said earlier, this format is for understandability but not suitable for fine-tuning. The reason is that the model is pre-trained based on a specific conventional format. The model now only understands that format, and it will function poorly if you switch to another format. Thus, we have to strictly follow the pre-trained model's format, unless we train the model from scratch. A funny metaphor could be a mathematics student who is always trying to find the axioms and theorems needed to compute a simple derivative, while a physics student, on the other hand, just basically computes it. It is the same problem but with a different pre-trained style (format). The result would be devastating if you asked a physics student to do it math-style, and vice versa.<br/> <br/>
 
-Check out the Hugging Face documentation on [chat templates](https://huggingface.co/docs/transformers/main/en/chat_templating). Based on their example below, the bare minimum prompt chat without a system prompt is
+&emsp;Check out the Hugging Face documentation on [chat templates](https://huggingface.co/docs/transformers/main/en/chat_templating). Based on their example below, the bare minimum prompt chat without a system prompt is
 ```
 <|user|>
 Which is bigger, the moon or the sun?</s>
@@ -399,7 +399,7 @@ So the general format for other fine-tuning projects could be, if you want to in
 <|system|>\n <system_prompt> </s><|user|>\n <input> </s><|assistant|>\n <output> </s>
 ```
 
-After knowing the format, we will reformat each element in our data. Then we convert the array to a **Dataset** type
+&emsp;After knowing the format, we will reformat each element in our data. Then we convert the array to a **Dataset** type
 ```python
 from datasets import Dataset
 
@@ -520,8 +520,7 @@ Based on [this](https://machinelearningmastery.com/difference-between-a-batch-an
 - **epoch**: The number of complete passes through the entire training dataset.<br/>
 
 So batches happen inside an epoch, and weights are updated after each batch, not just at the end of an epoch.<br/>
-Example: If we have 100 rows, and we set `batch = 10` and `epochs = 3`:<br/>
-Then each epoch will have $100 / 10 = 10$ batches. Since we have 3 epochs, we will process $3 \times 10 = 30$ batches in total. Processing 30 batches means the model will update its weights exactly 30 times.
+**Example**: If we have 100 rows, and we set `batch = 10` and `epochs = 3`. Then each epoch will have $100 / 10 = 10$ batches. Since we have 3 epochs, we will process $3 \times 10 = 30$ batches in total. Processing 30 batches means the model will update its weights exactly 30 times.
 
 Next, we will actually train our data:
 ```python
@@ -564,11 +563,11 @@ def generate_response(user_input):
 - ***max_new_tokens***: The upper bound for the output tokens only.<br/>
 - ***max_sequence_length***: The upper bound for both output + data + input.<br/>
 
-We can see that there are two upper bounds for the output, which could cause confusion. The model chooses to use *max_new_tokens*, which means they can generate if it already exceeds the *max_sequence_length*.
+&emsp;We can see that there are two upper bounds for the output, which could cause confusion. The model chooses to use *max_new_tokens*, which means they can generate if it already exceeds the *max_sequence_length*.
 
 ### Step 8: Download and make a local file
-[This](https://oneuptime.com/blog/post/2026-02-02-ollama-custom-modelfiles/view) shows how we can customize the Modelfile 
-- ***We have the GGUF file right, so what is this Modelfile?***: The GGUF file is what contains the core model, and that is it. Its job is only to take the numerical input and output a wide range of probabilities of numbers. That's it. The next word to choose is based on the generation strategy. Should it always take the highest one or also select those with close probabilities? The Modelfile handles it for us. It structures the input format from the user and determines what the next token should be. Also, it monitors when the model should stop.
+***We have the GGUF file right, so what is this Modelfile?*** 
+&emsp;The [GGUF](https://oneuptime.com/blog/post/2026-02-02-ollama-custom-modelfiles/view) file is what contains the core model, and that is it. Its job is only to take the numerical input and output collection of logits (raw format before probabilities). That's it. The next word to choose is based on the generation strategy. Should it always take the highest one or also select those with close probabilities? The Modelfile handles it for us. It structures the input format from the user and determines what the next token should be. Also, it monitors when the model should stop.
 #### 8.1 Template
 ```Go
 TEMPLATE "<|system|>
