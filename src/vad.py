@@ -12,7 +12,8 @@ from faster_whisper import WhisperModel
 import threading
 import queue
 
-# whisper use 16000 but with this 16000 kokoro will sounds weird
+# whisper use 16000 but with this 16000 kokoro will sounds weird. Thus Kokoro will have to use
+# 240000
 SAMPLE_RATE = 16000
 BLOCK_SIZE = 4096
 WINDOW_LENGTH_MS = 15
