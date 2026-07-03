@@ -6,7 +6,9 @@ In order to understand why we even need VAD, we need to understand how humans sp
 <img width="600" height="300" alt="Image" src="https://github.com/user-attachments/assets/c9f19863-c986-4776-ae18-8ec8944f2706" />
 
 This means that there is no actual word spoken out of your mouth. It is just a bunch of sound waves. 
+
 **So how do we even decode this sound wave?** 
+
 We usually base it on two measures: Frequency and Intensity
 
 - **Frequency- Hz**: describes the differences in wavelength. Basically, if each wave is near or far from each other 
@@ -28,7 +30,9 @@ Remember that the nature of a sound wave is continuous, but that of a computer i
 The Fourier section below will be built on the Euler formula. Euler formula requires an understanding of complex numbers. Thus, we need to refresh some of the complex concepts before progressing further
 ## 3.1 Definition
 In short, a complex number is the [extension](https://en.wikipedia.org/wiki/Complex_number) of a real number. One main idea of it is to allow at least a solution to ***all*** polynomial equations, which is impossible in real numbers. A complex number z is defined as
+
 $$z = a+i.b$$
+
 where
 - $a,b\in\mathbb{R}$
 - $z\in \mathbb{C}$
@@ -65,6 +69,7 @@ $$|z| = \sqrt{a^2 + b^2}$$
 $$\theta = \tan^{-1}\left(\frac{b}{a}\right)$$
 ## 3.4 Rotation with complex number
 As seen in the section above, the modulus is the same regardless of whether a or b is real or imaginary. Only in **argument** do we need to distinguish between them. So what happens if we change the sign of two parts or switch them together? We could infer that the modulus is still the same, only the argument is changing. This means they are literally on the circle with the radius of modulus. 
+
 **So the question is what kind of change is that?** 
 
 Given that we have 
@@ -72,6 +77,7 @@ Given that we have
 $$z=a+bi$$
 
 Let's call $z_{-1},z_{i},z_{-i}$ complex numbers, where we multiply by their corresponding subscripts -1, i, and -i, respectively. Then we have
+
 $$z_{-1} = -a-bi $$ 
 
 $$z_{i} = ai-b = -b + ai$$
@@ -231,9 +237,13 @@ $$z=e^{i-\frac{\pi}{2}}$$
 
 We can see that the angle they rotate matches with $\theta$ specified in the exponent formula. This means that if we have an arbitrary complex number $z_2$, then we could rotate it like this
 > [!NOTE]
->$$z.(-1) = z.e^{i\pi}$$
+> 
+>
+> $$z.(-1) = z.e^{i\pi}$$
+>
 > $$z.(i) = z.e^{i\frac{\pi}{2}}$$
->$$z.(-i) = z.e^{-i\frac{\pi}{2}}$$
+>
+> $$z.(-i) = z.e^{-i\frac{\pi}{2}}$$
 
 It turns out that not only can Euler be used as another form for a complex number, but it can be used as a means to rotate other vectors. Generally, multiply a complex number z with $e^{i\theta}$ will rotate its vector by the angle of $\theta$ 
 > [!IMPORTANT]
@@ -386,9 +396,11 @@ Rewrite [3] and [4] using $\theta(t)= 2\pi f t$, we will have
 > $$\cos(2\pi f t) = \frac{e^{i2\pi f t} + e^{-i2\pi f t}}{2}$$
 > 
 > $$\sin(2\pi f t) = \frac{e^{i2\pi f t} - e^{-i2\pi f t}}{2i}$$
+> 
 > These two formulas show that the sine and cosine waves could be thought of as **combination** of **two** circles with the same absolute value of frequency and radius but move in **opposiste direction**.
 
 ***Okay, how is this even relevant with our 2 questions above?***
+
 Back to our formula, consider they all have the same frequency of f
 
 $$z(t) = \sin(2\pi ft)e^{i2\pi ft}$$
@@ -410,6 +422,7 @@ $$=-\frac{ie^{i4\pi f t}}{2} + \frac{i}{2} $$
 $$=\frac{e^{-i\frac{\pi}{2}}e^{i4\pi f t}}{2} + \frac{i}{2} $$
 
 $$=\frac{e^{i(4\pi f t-\frac{\pi}{2})}}{2} + \frac{i}{2} $$
+
 so 
 
 $$z(t) = \sin(2\pi ft)e^{i2\pi ft} = \frac{e^{i(4\pi f t-\frac{\pi}{2})}}{2} + \frac{i}{2}$$
@@ -448,7 +461,10 @@ During a cycle, the Euler exponent points to many vectors around the origin. We 
 <img width="613" height="522" alt="Image" src="https://github.com/user-attachments/assets/0970ffee-e5d4-4054-9ff0-a200bb4e4738" /> 
 
 If we divide the complex into 4 parts: I, II, III, and IV. We can see that any vector in part I could be rotated 180 degrees to part III, and any vector in part II could be rotated 180 degrees to part IV, vice versa. This means that all vectors in I and III cancel each other if we add them up. The same thing for II and IV. If we add all the vectors pointed by Euler Exponent in one cycle, we could end up having vector 0. This is obvious with the circle since they all have the same length and direction. 
-My question is whether it is still true for any other symmetry shape rather than a circle? Remember the 3 leaves in the section above? If we cut right in the middle of a cut, it could produce two opposite parts. The total vector is zero. In order to do this, I need to know where all those vectors tend to point. Similarly, when we take the average of a list of numbers to check where they might concentrate, I will take the average of all vectors.
+
+***My question is whether it is still true for any other symmetry shape rather than a circle?*** 
+
+Remember the 3 leaves in the section above? If we cut right in the middle of a cut, it could produce two opposite parts. The total vector is zero. In order to do this, I need to know where all those vectors tend to point. Similarly, when we take the average of a list of numbers to check where they might concentrate, I will take the average of all vectors.
 
 $$\frac{\sum_{k=0}^{N}z_k}{N}$$
 
@@ -474,7 +490,9 @@ $$z(t)\Delta t$$
 
 Wait, isn't this some kind of area? What does this have to do with our average of vectors?
 Well, it turns out that there are different ways to think about the integral. In the real plane, the time is a dimension, so $z(t)dt$ might mean something about area. However, the time in the complex plane is dimensionless, which means it is just a parameter without any meaning on this plane. Instead of thinking $z(t)\Delta t$ as height and width, respectively, we could just think that the $\Delta t$ is just a weight or coefficient for our vector $z(t)$, and that's it. This means that instead of finding an area under the curve $z(t)$, we are finding the sum of a weighted vector. 
-You might ask why we need to have an extra step with this $\Delta t$? 
+
+***You might ask why we need to have an extra step with this $\Delta t$?***
+
 Because we can not just automatically apply an integral, we need some kind of index for the time so we could convert to a Riemann sum. Steps below will show exactly how.
 
 Assume that we have N vectors and a given time frame. We would like to allocate them evenly. Thus the time between each vector is 
@@ -652,7 +670,10 @@ The condition to have the average vector as the origin is when
 
 $$n\frac{f_0}{f_1} = k$$
 
-where $ k$ is an integer. If $\frac{f_0}{f_1}$ is an integer. This means that whenever $f_1$ finishes one cycle, $f_0$ needs to already just finish a complete cycle. However, the condition is kind of generous to include the number of cycles. So **what does this mean?**
+where $ k$ is an integer. If $\frac{f_0}{f_1}$ is an integer. This means that whenever $f_1$ finishes one cycle, $f_0$ needs to already just finish a complete cycle. However, the condition is kind of generous to include the number of cycles. 
+
+So **what does this mean?**
+
 Assume we have $\frac{f_0}{f_1} = r$ where r is any arbitrary real number. This means that whenever Euler rotates completely, the radius completes r cycles. Remember that r is real, so it could be 0.5 or 5.333. If Euler completes two cycles, the second cycle of the radius will add up with the first cycle to have 2r, 3 cycles for 3r. When Euler's exponent completes n cycles, the radius completes 
 
 $$nr=n\frac{f_0}{f_1}$$
@@ -664,7 +685,11 @@ cycles. However, as long as nr is an integer, then it would make the rotation ba
 >
 >  After the rotation finishes its n complete cycles, if the Euler also finishes k cycles where k is an integer, then the average vector is the origin. Note that this might be true for a few specific **n** cycles. **n+1** might not be true. If $\frac{f_0}{f_1}$ is an integer, it is true for any **n**
 ### 5.3.2 Number of cycles
-As you noticed in the result of the integral for both integrals. The $n$ only exists in the denominator and in the cos/sin waves. Since cos/sin just oscillate around -1 and 1, the *n* in the denominator actually affects the value totally. **If we take the limit as n approaches, what could happen?** We know the limit of a vector function could be evaluated by taking limits for each component. This means that if we have a vector function such that
+As you noticed in the result of the integral for both integrals. The $n$ only exists in the denominator and in the cos/sin waves. Since cos/sin just oscillate around -1 and 1, the *n* in the denominator actually affects the value totally. 
+
+**If we take the limit as n approaches, what could happen?** 
+
+We know the limit of a vector function could be evaluated by taking limits for each component. This means that if we have a vector function such that
 
 $$v(x)=(f(x),g(x))$$
 
@@ -799,6 +824,7 @@ $$0\leq lim_{f_1\to \infty}Img(z) \leq lim_{f_1\to \infty}\frac{ -2*1}{2n\pi(\fr
 $$0\leq lim_{f_1\to \infty}Img(z) \leq lim_{f_1\to \infty}\frac{ -2*1}{2n\pi(0-1)}$$
 
 **Wait a minute, this upper bound doesn't cover zero???**
+
 It turns out that the usual way doesn't have a strong enough upper bound. There is an [inequality](https://proofwiki.org/wiki/Cosine_Inequality) that has an even tighter bound. It states that 
 
 $$1-cos(x)\leq \frac{x^2}{2}\ \ \forall x$$
@@ -828,6 +854,7 @@ We also achieve the same result as the cos wave.
 >This means that the average vector coverage to the origin point is large if $f_0$ is large
 
 **So why?**
+
 The reason may be that if the rotation speed is so fast compared to radius one, it could complete the cycle with less change in the radius. The less, the more it is like a circle. For a cos wave where it is 1 initially, faster means it keeps this radius 1.
 
 <img width="1389" height="1189" alt="Image" src="https://github.com/user-attachments/assets/d56baf70-9415-4a26-9c9d-25660f8e6afc" />
@@ -854,7 +881,9 @@ Let
 $$N = f_1f_0\sin\left(2\pi n \frac{f_0}{f_1}\right)$$
 
 $$D = 2n\pi(f_0^2-f_1^2)$$
+
 **Numerator N**
+
 $$\frac{dN}{df_1} = \frac{d}{df_1}f_1f_0\sin\left(2\pi n \frac{f_0}{f_1}\right)$$
 
 $$= f_0\sin\left(2\pi n\frac{f_0}{f_1}\right) + f_1f_0\cos\left(2\pi n \frac{f_0}{f_1}\right)*\frac{-2\pi n f_0}{f_1^2}$$
@@ -866,7 +895,9 @@ $$\lim_{f_1 \to f_0} \frac{dN(f_1)}{df_1} $$
 $$= f_0\sin\left(2\pi n\frac{f_0}{f_0}\right) + f_0f_0\cos\left(2\pi n \frac{f_0}{f_0}\right)*\frac{-2\pi n f_0}{f_0^2}$$
 
 $$= 0 -2\pi n f_0 = -2\pi n f_0$$
+
 **Denominator D**
+
 $$\frac{dD(f_1)}{df_1} = \frac{d}{df_1}2n \pi (f_0^2-f_1^2)$$
 
 $$\frac{dD(f_1)}{df_1} = -4n \pi f_1$$
@@ -901,6 +932,7 @@ $$\lim_{f_1 \to f_0} \frac{dN(f_1)}{df_1} $$
 $$=2f_0\left(cos\left(2\pi n \frac{f_0}{f_0}\right)-1 \right) + f_0^2sin\left(2\pi n \frac{f_0}{f_0}\right)\frac{-2\pi n f_0}{f_0^2} + 0$$
 
 $$0 + 0=0$$
+
 **Denominator part**
 Same as above
 So our limit for both now would be 
@@ -931,10 +963,10 @@ Plot this using $n=1$ and $f_0 = 3$
 
 It is kinda suprising that $f_1 = f_0$ is not the global maximum even though the function rises really high near it. You also notice that as $f_1$ is large enough, it gradually approaches zero. So generally the area surrounding this matched frequency has higher magnitude. This is an important feature that people usually use to find the matched frequency. 
 
-## 5.4 Integral as Dot product
-There is other way to look at the integral and this way is usually used on Internet tutorial. Instead of combing all the vectors together, we could see it as a dot product of two vectors. 
-You could say that Wait a minute two vectors? what does it even mean?
-Basically above section we treat f(t) as radius of a vector for a given time, now the f(t) itself is an vector where each value of t is itself an independent basis. However, since the time is continuous, there are inifitely many values. This mean that each of our vector infact has inifitenyly many dimensions. 
+## 5.4 Integral as Dot Product
+There is another way to look at the integral, and this way is usually used in internet tutorials. Instead of combining all the vectors together, we could see it as a dot product of two vectors. 
+You could say that "Wait, a minute, two vectors? What does it even mean?"
+Basically, in the above section we treat f(t) as the radius of a vector for a given time. Now the f(t) itself is a vector where each value of t is itself an independent basis. However, since the time is continuous, there are infinitely many values. This means that each of our vectors, in fact, has infinitely many dimensions. 
 
 $$ f(t) = \begin{bmatrix}
 f(t=\infty) \\
@@ -948,74 +980,83 @@ f(t=1.1)\\
 f(t=-\infty)
 \end{bmatrix}$$
 
-Recall the defintion of [dot product](https://en.wikipedia.org/wiki/Dot_product): It is an math operation similiar to addition, substraion, multiplication... It take two sequences of the same length and produce single output. Assume that we have two vectors a and b such that
+Recall the definition of [dot product](https://en.wikipedia.org/wiki/Dot_product): It is a math operation similar to addition, subtraction, multiplication... It takes two sequences of the same length and produces a single output. Assume that we have two vectors a and b such that.
 
 $$a=(a_1,a_2,a_3,...,a_n)$$
 
 $$b=(b_1, b_2, b_3,...,b_n)$$
 
-Then dot product, respresented by the do $\cdot$ is:
+Then the dot product, represented by the dot $\cdot$ is:
 
 $$a\cdot b = a_1b_1 + a_2b_2 +...+ a_nb_n$$
 
-That is for two regular vectors. For the case of real function, it is a bit different but similiar concept. Assume we have two real functions f and g. Then their product is denoted as 
+That is for two regular vectors. For the case of real functions, it is a bit different but a similar concept. Assume we have two real functions f and g. Then their product is denoted as 
 
 $$\langle f, g \rangle=\int f(t)g(t)dt$$
 
-If f and g are in complex domain,then one of them must be [conjungated](https://www.math.mcgill.ca/labute/courses/247B/inner1.pdf)
+If f and g are in the complex domain, then one of them must be [conjugated](https://www.math.mcgill.ca/labute/courses/247B/inner1.pdf)
 
 $$\langle f, g \rangle=\int f(t)\overline{g(t)}dt$$
 
 # 6 Inverse of Euler Exponent
-Okay so the general idea is how can we get back from the complex plane to the real complane. Theoretically, since we only rotated counterclockwise the vector via the transformation, we only need to rotate them back clockwise the same angle that they sweep
+Okay, so the general idea is: how can we get back from the complex plane to the real plane? Theoretically, since we only rotated the vector counterclockwise via the transformation, we only need to rotate it back clockwise the same angle that they sweep.
 
 <img width="1180" height="472" alt="Image" src="https://github.com/user-attachments/assets/e9dff79f-8c9c-40e6-86e0-8f4bc199bc1b" />
 
-Assume that our vector has formula
+Assume that our vector has the formula.
 
 $$z(t) = f(t) e^{i\theta}$$
 
-This vector has been rotated an angle $\theta$ counterclockwise. Applying same idea, we only need to rotate it back with the same absolute angle but opposite direction $-\theta$
+This vector has been rotated an angle $\theta$ counterclockwise. Applying the same idea, we only need to rotate it back with the same absolute angle but in the opposite direction, $-\theta$
 
 $$f(t) = z(t) * e^{-i\theta} = f(t) e^{i\theta - i\theta} = f(t)$$
 
 ## 6.1 Number of frequencies needed for n number of values
-Simply as that, we don't really need to do anything much. **So why do we need this section??** 
-Okay just think it this way, there are infinitiely many vectors during a cycle. Are you able to store all of them? Practically people don't care how each individual vector but only the average one. This mean they only store their average and discard information about each individual vector. Simply speaking, we couldn't convert it back if we only have single output average vector but there many inputs input vector.
-***How can we get around this***
-Remember how do we define our average vector? Put aside that heavy integral, it is simply as:
+Simply put, we don't really need to do anything much. 
+
+**So why do we need this section??** 
+
+Okay, just think it this way: there are infinitely many vectors during a cycle. 
+
+***Are you able to store all of them?***
+
+Practically, people don't care about how each individual vector is, but only the average one. This means they only store their average and discard information about each individual vector. Simply speaking, we couldn't convert it back if we only have a single output average vector, but there are many input vectors.
+
+***How can we get around this?***
+
+Remember how we define our average vector? Put aside that heavy integral. It is simply as:
 
 $$z_{avg} = \frac{\sum_{k=0}^{N}z_k}{N} = \frac{\sum_{k=0}^{N}f(t_k)e^{i2\pi ft_k}}{N}$$
 
-Look at this carefully, you will see that $f(t_k)$ is what we need to convert back and $e^{i2\pi ft_k}$. This mean that that Euler Exponent is always there as long as we have the time index. Our problem is just that We lose information about which $e^{i2\pi ft_k}$ correspond to what $f(t_k)$ 
+Look at this carefully. You will see that $f(t_k)$ is what we need to convert back, and $e^{i2\pi ft_k}$. This means that the Euler Exponent is always there as long as we have the time index. Our problem is just that We lose information about which $e^{i2\pi ft_k}$ correspond to what $f(t_k)$ 
 For further explanation, I will let 
 
 $$d = z_{avg}N,\  x_k = f(t_k), \ a_{k}= e^{i 2\pi f t_k}$$
 
-We could rewrite our average vector but in algebra style
+We could rewrite our average vector in algebra style.
 
 $$a_{1}x_1 + a_2x_2 + a_3x_3 +...+a_kx_k = d[1]$$
 
 So we all know ${a_k},d$ and our job is to calculate the ${x_k}$. What do we do?
-Let take small example, how can you find 2 variables$x_1$ and $x_2$ with one equation like in this example
+Let's take a small example: how can you find 2 variables$x_1$ and $x_2$ with one equation like in this example.
 
 $$5x_1+3x_2 = 2$$
 
-If we do some operation we end up having
+If we do some operations, we end up having.
 
 $$x_1 = \frac{2-3x_2}{5}$$
 
-It doesn't have unique solution since we could let $x_2$ be anything. So one variable can be free. 
-If we have one equation and 5 variable like this
+It doesn't have a unique solution since we could let $x_2$ be anything. So one variable can be free. 
+If we have one equation and 5 variables like this
 
 $$5x_1+3x_2 +5x_3= 2$$
 
-We derive to this
+We derive this
 
 $$x_1 = \frac{2-3x_2-5x_3-2x_4-7x_5}{5}$$
 
 So basically we end up having 4 free variables.
-If want it to have single solution, we need to to give in another equation to fix one of its free variable
+If we want it to have a single solution, we need to give it another equation to fix one of its free variables.
 
 $$5x_1+3x_2 = 2$$
 
@@ -1027,7 +1068,7 @@ $$x_1 = \frac{-2}{3}$$
 
 $$x_2 = \frac{7}{3}$$
 
-If there 3 variables, we only need two more equations 
+If there are 3 variables, we only need two more equations. 
 
 $$5x_1+3x_2 +5x_3= 2$$
 
@@ -1035,7 +1076,7 @@ $$4x_1+1x_2 +3x_3= 1$$
 
 $$3x_1+3x_2 +7x_3= 7$$
 
-We end up having that
+We end up having that.
 
 $$x_1 = -\frac{9}{11}$$
 
@@ -1043,13 +1084,15 @@ $$x_2 = -\frac{17}{22}$$
 
 $$x_3 = \frac{37}{22}$$
 
-We can see that to solve it for a unique solution
+We can see that to solve it for a unique solution.
 
 $$Number\ of\ variables = Number\ of\ equations$$
 
-Back to our equation [1], we have ${x_k}$  variables but only a single solution. If k > 1, then at least one of the radius must be free. This sound doesn't right since we want all of them to be defined. Thus, we also need an ***k*** number of equations.
-***Okay but how do you make more equations?***
-So basically we have two stages: one from real to complex and the other from complex back to real. When from real to complex, we have all the inputs f(t) and we can freely make up our euler exponent to compute the average vectors. Our problem now is that how cana we back those f(t) in second stage given that we have all the euler exponent and average vectors. We can see that each Average vector might correspond to differet Euler Exponent. In Euler Exponent $e^{i2\pi ft_k}$, we only need to change the frequencies $f$. Thus changing frequency of Euler Rotation lead to change in average vector. Following this idea, Let 
+Back to our equation [1], we have ${x_k}$  variables but only a single solution. If k > 1, then at least one of the radius must be free. This sounds wrong since we want all of them to be defined. Thus, we also need an ***k*** number of equations.
+
+***Okay, but how do you make more equations?***
+
+So basically we have two stages: one from real to complex and the other from complex back to real. When from real to complex, we have all the inputs f(t), and we can freely make up our Euler exponent to compute the average vectors. Our problem now is: how can we back those f(t) in the second stage given that we have all the Euler exponents and average vectors. We can see that each Average vector might correspond to a different Euler Exponent. In Euler Exponent $e^{i2\pi ft_k}$, we only need to change the frequencies $f$. Thus, changing the frequency of the Euler rotation leads to a change in the average vector. Following this idea, let 
 
 $$a_{mj} = e^{i2\pi f_it_j}$$
 
@@ -1061,13 +1104,19 @@ $$a_{11}x_1 + a_{12}x_{2} + a_{13}x_3 +...+a_{1k}x_k = d_1$$
 
 Since we have up to **k** numbers, we only need to make up **j-1** to produce more **j-1** equations. So we would have
 
-$$a_{11}x_1 + a_{12}x_{2} + a_{13}x_3 +...+a_{1k}x_k = d_1\\
-...\\
-a_{m1}x_1 + a_{m2}x_{2} + a_{m3}x_3 +...+a_{mk}x_k = d_m\\
-...\\
-a_{k1}x_1 + a_{k2}x_{2} + a_{k3}x_3 +...+a_{kk}x_k = d_k$$
-***Okay we have *j* equations now, how to solve it***
-In this step we only need to convert it
+$$a_{11}x_1 + a_{12}x_{2} + a_{13}x_3 +...+a_{1k}x_k = d_1$$
+
+$$...$$
+
+$$a_{m1}x_1 + a_{m2}x_{2} + a_{m3}x_3 +...+a_{mk}x_k = d_m$$
+
+$$...$$
+
+$$a_{k1}x_1 + a_{k2}x_{2} + a_{k3}x_3 +...+a_{kk}x_k = d_k$$
+
+***Okay we have *j* equations now, how to solve it?***
+
+In this step, we only need to convert it
 
 $$\begin{bmatrix} 
 a_{11} & a_{12} & \dots & a_{1j} \\ 
@@ -1082,7 +1131,7 @@ x_1 \\ x_2 \\ \vdots \\ x_j
 d_1 \\ d_2 \\ \vdots \\ d_j 
 \end{bmatrix}$$
 
-Let call A is a matrix of those coeeficients, X be the matrix of variable, and D be the matrix of output vectors. Then we would have 
+Let's call A the matrix of those coefficients, X the matrix of variables, and D the matrix of output vectors. Then we would have 
 
 $$AX=D$$ 
 
@@ -1092,9 +1141,10 @@ $$A^{-1}AX=A^{-1}D$$
 
 $$X=A^{-1}D$$
 > [!NOTE]
-> If we have **k** number of inputs f(t), we need to make up **k** number of frequencies if we want to convet it back from average vectors z_avg to original input f(t)
+> If we have **k** number of inputs f(t), we need to make up **k** number of frequencies if we want to convert it back from average vectors z_avg to the original input f(t)
+
 ## 6.2 change in basis
-Recall the section ***5.4 Integral as Dot product***, where we discuss that each function could be consider as vectors of initiely many dimensions where each dimensions only exists in a very specific time  and 0 every other time.
+Recall the section ***5.4 Integral as Dot product***, where we discussed that each function could be considered as vectors of infinitely many dimensions, where each dimension only exists at a very specific time and is 0 every other time.
 
 $$ g(t) = \begin{bmatrix}
 g(t_{\infty}) \\
@@ -1116,7 +1166,7 @@ $$\widehat{e_{t_0}} = \begin{cases}
    \end{cases}$$
 
 Let call bases as time bases and denote our vector $[v]_t = g(t)$
-The general idea is that the Euler Exponent is the change in the basis from t-basis to f-basis where the basis of complex plane would be those [euler exponent](https://en.wikipedia.org/wiki/Discrete_Fourier_transform) with different frequencies. Remember when we did before in 5.4 Integral as Dot product section, yes the whole euler exponent is consider as an vector. This mean that 
+The general idea is that the Euler Exponent is the change in the basis from the t-basis to the f-basis, where the basis of the complex plane would be those [Euler exponent](https://en.wikipedia.org/wiki/Discrete_Fourier_transform) with different frequencies. Remember, when we did before in the 5.4 Integral as Dot product section, yes, the whole Euler exponent is considered as a vector. This means that 
 
 $$e^{i2\pi f_k t} = \begin{bmatrix}
 e^{i2\pi f_k t_{\infty}} \\
@@ -1130,7 +1180,10 @@ e^{i2\pi f_k t_{1.1}}\\
 e^{i2\pi f_k t_{-\infty}}
 \end{bmatrix} = ....+e^{i2\pi f_k t_{1}}*\widehat{e_1}...+e^{i2\pi f_k t_{1.001}}*\widehat{e_{1.001}}+...$$
 
-Our idea is that to convert from time domain to the frequency domain, specificly the average vector $d_m$. Look back at the section above, the matrix **D** is actually our new coordination in vector plane. You can see that the difference between components in **D** is not about the time. The reason is that you could just let first coefficient $a_{m1}$ correspond to the first value of time $t_1$, second of coofifiecent correspond $a_{m2}$ to second value of time $t_2$ for each row of A.  This mean time in each row to create an component $d_m$ is not significant. What make each result $d_m$ different is about the new frequency $f_m$. This mean that we could write our result as function depend on f $$d(f)$$ . With that in mind, our vector $v$ in new complex plane has coordination
+Our idea is to convert from the time domain to the frequency domain, specifically the average vector $d_m$. Look back at the section above, the matrix **D** is actually our new coordinate in the vector plane. You can see that the difference between components in **D** is not about the time. The reason is that you could just let the first coefficient $a_{m1}$ correspond to the first value of time $t_1$, the second coefficient $ a _ {m2} $ correspond to the second value of time $t_2$ for each row of A.  This means the time in each row to create a component $d_m$ is not significant. What makes each result $d_m$ different is the new frequency $f_m$. This means that we could write our result as a function dependent on f 
+$$d(f)$$
+
+With that in mind, our vector $v$ in the new complex plane has coordinates
 
 $$[v]_f = \begin{bmatrix}
 d(f_{\infty}) \\
@@ -1144,12 +1197,15 @@ d(f_{1.1})\\
 d(f_{-\infty})
 \end{bmatrix} = ....+d(f_1)*e^{2\pi tf_1}...+d(f_{1.0001})*e^{i2\pi tf_{1.0001}}+...$$
 
-And the collection of $\{e^{2\pi t f_m}\}$ where $t$ is just shorthand for the length of individual vector in time domain $-\infty \to \infty$ and $m$ is the number of total basis vectors in complex plane.
+And the collection of $\{e^{2\pi t f_m}\}$, where $t$ is just shorthand for the length of an individual vector in the time domain $-\infty \to \infty$ and $m$ is the total number of basis vectors in the complex plane.
+
 # 7 Fourier transform  
-If you make it here, that means you almost understand the backbone of the fourier transform. 
+If you make it here, that means you almost understand the backbone of the Fourier transform. 
 ## 7.1 Fourier Series
-[Jean-Baptiste Joseph Fourier](https://www.youtube.com/watch?v=2bSw38dqRrU) an French scienctist who came up with solution of heat and vibrartion by what we know to day is fourier seiries. Fourier Seiries is a way to use cos and sin wave to represent peridoic funciton. There are two concepts: Fourier Seiries and Fouriest Transform. The [first](https://math.uchicago.edu/~may/REU2023/REUPapers/Tarquino.pdf) one deal with the periodic function and the second deal with any kind of function. The modern Fourier series could be written as:
+[Jean-Baptiste Joseph Fourier](https://www.youtube.com/watch?v=2bSw38dqRrU) was a French scientist who came up with a solution to heat and vibration by what we know today as the Fourier series. Fourier series is a way to use cosine and sine waves to represent periodic functions. There are two concepts: Fourier series and Fourier transform. The [first](https://math.uchicago.edu/~may/REU2023/REUPapers/Tarquino.pdf) one deals with the periodic function, and the second deals with any kind of function. The modern Fourier series could be written as:
+
 $$f(x) = a_0 +\sum_{n=1}^{\infty} \left(a_n\cos\left(\frac{n\pi x}{L}\right)+b_n\sin\left(\frac{n\pi x}{L}\right)\right)$$
+
 where L of period, this mean that $f(x) = f(x+L)$
 The coefficients are defined as
 
@@ -1159,77 +1215,95 @@ $$a_n = \frac{2}{L}\int_0^L f(x)\cos\left(\frac{n\pi x}{L}\right)dx$$
 
 $$b_n = \frac{2}{L}\int_0^L f(x)\sin\left(\frac{n\pi x}{L}\right)dx$$
 
-We can check how does it work by actually integrate them
-$a_0$: each cos/sin waves has its own negative and positive phases over the courses of its period. Thus by integrating without using absolute value, those phases would be canceld out each other. This result in a 0 in the area for each wave. This leave only the constant left
+We can check how it works by actually integrating them
+. $a_0$: each cos/sin wave has its own negative and positive phases over the course of its period. Thus, by integrating without using absolute value, those phases would cancel each other out. This results in a 0 in the area for each wave. This leaves only the constant left.
 
-$$\frac{1}{L}\int_0^L f(x)dx\\
-\frac{1}{L}\int_0^L a_0 +\sum_{n=1}^{\infty} \left(a_n\cos\left(\frac{n\pi x}{L}\right)+b_n\sin\left(\frac{n\pi x}{L}\right)\right)dx\\
-\frac{1}{L}\int_0^L a_0dx +\frac{1}{L}\int_0^L\sum_{n=1}^{\infty} \left(a_n\cos\left(\frac{n\pi x}{L}\right)+b_n\sin\left(\frac{n\pi x}{L}\right)\right)dx\\
-\frac{1}{L}\int_0^L a_0dx +\frac{1}{L}\sum_{n=1}^{\infty} \left(a_n\int_0^L\cos\left(\frac{n\pi x}{L}\right)dx+\int_0^Lb_n\sin\left(\frac{n\pi x}{L}\right)dx\right)\\
-\frac{1}{L}a_0x\bigg|_0^L +\frac{1}{L}\sum_{n=1}^{\infty} \left(\frac{La_n}{n\pi}\sin\left(\frac{n\pi x}{L}\right)\bigg|_0^L+\frac{-Lb_n}{n\pi}\cos\left(\frac{n\pi x}{L}\right)\bigg|_0^L\right)\\
-\frac{1}{L}a_0L-0 +\frac{1}{L}\sum_{n=1}^{\infty} (0-0-1+1)\\
-a_0
-$$
+$$\frac{1}{L}\int_0^L f(x)dx$$
+
+$$\frac{1}{L}\int_0^L a_0 +\sum_{n=1}^{\infty} \left(a_n\cos\left(\frac{n\pi x}{L}\right)+b_n\sin\left(\frac{n\pi x}{L}\right)\right)dx$$
+
+$$\frac{1}{L}\int_0^L a_0dx +\frac{1}{L}\int_0^L\sum_{n=1}^{\infty} \left(a_n\cos\left(\frac{n\pi x}{L}\right)+b_n\sin\left(\frac{n\pi x}{L}\right)\right)dx$$
+
+$$\frac{1}{L}\int_0^L a_0dx +\frac{1}{L}\sum_{n=1}^{\infty} \left(a_n\int_0^L\cos\left(\frac{n\pi x}{L}\right)dx+\int_0^Lb_n\sin\left(\frac{n\pi x}{L}\right)dx\right)$$
+
+$$\frac{1}{L}a_0x\bigg|_0^L +\frac{1}{L}\sum_{n=1}^{\infty} \left(\frac{La_n}{n\pi}\sin\left(\frac{n\pi x}{L}\right)\bigg|_0^L+\frac{-Lb_n}{n\pi}\cos\left(\frac{n\pi x}{L}\right)\bigg|_0^L\right)$$
+
+$$\frac{1}{L}a_0L-0 +\frac{1}{L}\sum_{n=1}^{\infty} (0-0-1+1)$$
+
+$$a_0$$
+
+
 
 $a_n$:
 
-$$\frac{2}{L}\int_0^L  f(x)\cos\left(\frac{n\pi x}{L}\right)dx\\
-\frac{2}{L}\int_0^L\left[ a_0 +\sum_{k=1}^{\infty} \left(a_k\cos\left(\frac{k\pi x}{L}\right)+b_k\sin\left(\frac{k\pi x}{L}\right)\right)\right]\cos\left(\frac{k\pi x}{L}\right)dx$$ 
+$$\frac{2}{L}\int_0^L  f(x)\cos\left(\frac{n\pi x}{L}\right)dx$$
 
-Based on above integral we see that
+$$\frac{2}{L}\int_0^L\left[ a_0 +\sum_{k=1}^{\infty} \left(a_k\cos\left(\frac{k\pi x}{L}\right)+b_k\sin\left(\frac{k\pi x}{L}\right)\right)\right]\cos\left(\frac{k\pi x}{L}\right)dx$$ 
+
+Based on the above integral, we see that.
 
 $$\frac{2}{L}\int_0^La_0\cos\left(\frac{n\pi x}{L}\right)dx=0$$
 
 So we only need to consider 
 
-$$\frac{2}{L}\int_0^L\sum_{k=1}^{\infty} \left(a_k\cos\left(\frac{k\pi x}{L}\right)+b_k\sin\left(\frac{k\pi x}{L}\right)\right)\cos\left(\frac{n\pi x}{L}\right)dx\\
-\frac{2}{L}\sum_{k=1}^{\infty} a_k\int_0^L\cos\left(\frac{k\pi x}{L}\right)\cos\left(\frac{n\pi x}{L}\right)dx+b_k\int_0^L\sin\left(\frac{k\pi x}{L}\right)\cos\left(\frac{n\pi x}{L}\right)dx[1]$$
+$$\frac{2}{L}\int_0^L\sum_{k=1}^{\infty} \left(a_k\cos\left(\frac{k\pi x}{L}\right)+b_k\sin\left(\frac{k\pi x}{L}\right)\right)\cos\left(\frac{n\pi x}{L}\right)dx$$
 
-It is too long so wi would substitue it a little bit. Let 
+$$\frac{2}{L}\sum_{k=1}^{\infty} a_k\int_0^L\cos\left(\frac{k\pi x}{L}\right)\cos\left(\frac{n\pi x}{L}\right)dx+b_k\int_0^L\sin\left(\frac{k\pi x}{L}\right)\cos\left(\frac{n\pi x}{L}\right)dx[1]$$
 
-$$C_k =a_k\int_0^L\cos\left(\frac{k\pi x}{L}\right)\cos\left(\frac{n\pi x}{L}\right)dx\\
-S_k = b_k\int_0^L\sin\left(\frac{k\pi x}{L}\right)\cos\left(\frac{n\pi x}{L}\right)dx$$ 
+It is too long, so we would shorten it by substituting a little bit. Let 
 
-So [1] could be rewrite as 
+$$C_k =a_k\int_0^L\cos\left(\frac{k\pi x}{L}\right)\cos\left(\frac{n\pi x}{L}\right)dx$$
 
-$$\frac{2}{L}\sum_{k=1}^{\infty} C_k + S_k\\
-\frac{2}{L}\sum_{k=1}^{n-1}(C_k+S_k) + C_n + S_n + \sum_{k=n+1}^{\infty}(C_k+S_k)[2]$$
+$$S_k = b_k\int_0^L\sin\left(\frac{k\pi x}{L}\right)\cos\left(\frac{n\pi x}{L}\right)dx$$ 
+
+So [1] could be rewritten as 
+
+$$\frac{2}{L}\sum_{k=1}^{\infty} C_k + S_k$$
+
+$$\frac{2}{L}\sum_{k=1}^{n-1}(C_k+S_k) + C_n + S_n + \sum_{k=n+1}^{\infty}(C_k+S_k)[2]$$
 
 Consider the case $C_k$ and $S_k$ where $k \neq n$
 
-$$C_k =a_k\int_0^L\cos\left(\frac{k\pi x}{L}\right)\cos\left(\frac{n\pi x}{L}\right)dx\\
-\frac{a_k}{2}\int_0^L\cos\left(\frac{(k-n)\pi x}{L}\right)+\cos\left(\frac{(k+n)\pi x}{L}\right)dx = 0$$
+$$C_k =a_k\int_0^L\cos\left(\frac{k\pi x}{L}\right)\cos\left(\frac{n\pi x}{L}\right)dx$$
 
-$$S_k = b_k\int_0^L\sin\left(\frac{k\pi x}{L}\right)\cos\left(\frac{n\pi x}{L}\right)dx\\
-\frac{a_k}{2}\int_0^L\sin\left(\frac{(k-n)\pi x}{L}\right)+\sin\left(\frac{(k+n)\pi x}{L}\right)dx=0$$
+$$\frac{a_k}{2}\int_0^L\cos\left(\frac{(k-n)\pi x}{L}\right)+\cos\left(\frac{(k+n)\pi x}{L}\right)dx = 0$$
+
+$$S_k = b_k\int_0^L\sin\left(\frac{k\pi x}{L}\right)\cos\left(\frac{n\pi x}{L}\right)dx$$
+
+$$\frac{a_k}{2}\int_0^L\sin\left(\frac{(k-n)\pi x}{L}\right)+\sin\left(\frac{(k+n)\pi x}{L}\right)dx=0$$
 
 Consider the case $C_n$ and $S_n$
 
-$$C_n =a_n\int_0^L\cos\left(\frac{n\pi x}{L}\right)\cos\left(\frac{n\pi x}{L}\right)\\
-\frac{a_n}{2}\int_0^L1+\cos\left(\frac{2n\pi x}{L}\right)dx\\
-\frac{a_nL}{2}$$
+$$C_n =a_n\int_0^L\cos\left(\frac{n\pi x}{L}\right)\cos\left(\frac{n\pi x}{L}\right)$$
 
-$$S_n = b_n\int_0^L\sin\left(\frac{n\pi x}{L}\right)\cos\left(\frac{n\pi x}{L}\right)dx\\
-\frac{a_n}{2}\int_0^L\sin\left(\frac{(n-n)\pi x}{L}\right)+\sin\left(\frac{(n+n)\pi x}{L}\right)dx=0$$
+$$\frac{a_n}{2}\int_0^L1+\cos\left(\frac{2n\pi x}{L}\right)dx$$
+
+$$\frac{a_nL}{2}$$
+
+$$S_n = b_n\int_0^L\sin\left(\frac{n\pi x}{L}\right)\cos\left(\frac{n\pi x}{L}\right)dx$$
+
+$$\frac{a_n}{2}\int_0^L\sin\left(\frac{(n-n)\pi x}{L}\right)+\sin\left(\frac{(n+n)\pi x}{L}\right)dx=0$$
 
 Recall [2]
 
-$$\frac{2}{L}\sum_{k=1}^{n-1}(C_k+S_k) + C_n + S_n + \sum_{k=n+1}^{\infty}(C_k+S_k)\\
-\frac{2}{L}\sum_{k=1}^{n-1}(0+0) + \frac{a_nL}{2}+0 + \sum_{k=n+1}^{\infty}(0+0)\\
-a_n$$
+$$\frac{2}{L}\sum_{k=1}^{n-1}(C_k+S_k) + C_n + S_n + \sum_{k=n+1}^{\infty}(C_k+S_k)$$
 
-For the case of $b_n$, apply the same procedure with the notice that 
+$$\frac{2}{L}\sum_{k=1}^{n-1}(0+0) + \frac{a_nL}{2}+0 + \sum_{k=n+1}^{\infty}(0+0)$$
+
+$$a_n$$
+
+For the case of $b_n$, apply the same procedure with the note that. 
 
 $$\sin^2(x)= \frac{1-\cos(2x)}{2}$$
 
-So the general idea is that when we multiply with either sin or cosine waves, only the same waves with the same frequency spit out a constant during integral, otherwise will be canceled to 0.
+So the general idea is that when we multiply by either sin or cosine waves, only the same waves with the same frequency will spit out a constant during the integral; otherwise, it will be canceled to 0.
 
 ## 7.2 Fourier Transform
-The general idea of Fourier Series built based on the periodic of function on a specific period $\[0,L\]$. The Fourier Transform further extend to work on aperiodic function which mean that they don't repeat at all. But how? Basically we consider that those functions would repeat only at [finity](https://math.uchicago.edu/~may/REU2023/REUPapers/Tarquino.pdf). This is the same thing when you say that "Hey I will do it next time" but that next time might never come. Same idea with what with have built so far about the circles and average vectors but we denote a little different. We call the sum of vectors to be $\hat{f}$. The formal definition for Fourier Transform is that it is a function that take function as input and outputs another function where it describe the degree of frequencies in it. In simpler term, it show the magnitude of the vectors sum for each frequency. At this point, we could think frequencies are similiar to time dimensions.
+The general idea of Fourier series is built based on the periodicity of a function on a specific period $\[0,L\]$. The Fourier Transform further extends to work on aperiodic functions, which means that they don't repeat at all. But how? Basically, we consider that those functions would repeat only at [infinity](https://math.uchicago.edu/~may/REU2023/REUPapers/Tarquino.pdf). This is the same thing as when you say that "Hey, I will do it next time," but that next time might never come. Same idea as what we have built so far about the circles and average vectors, but we denote it a little differently. We call the sum of vectors $\hat{f}$. The formal definition for the Fourier Transform is that it is a function that takes a function as input and outputs another function that describes the degree of frequencies in it. In simpler terms, it shows the magnitude of the vector sum for each frequency. At this point, we could think of frequencies as similar to time dimensions.
 
 $$F(k) = \int_{-\infty}^{\infty}f(t)e^{-i2\pi k t}$$
 
-The reason why we have negative frequency might be because we have to conjungate one of the vector if we want to take inner product between $f(t)$ and $e^{i2\pi k t}$
+The reason why we have negative frequency might be because we have to conjugate one of the vectors if we want to take an inner product between $f(t)$ and $e^{i2\pi k t}$
 And its inverse is 
 
 $$f(t) = \int_{-\infty}^{\infty}F(k)e^{i2\pi k t}$$
@@ -1238,56 +1312,64 @@ which is inner product $<F(k),e^{-2i\pi k t}>$
 
 <img width="832" height="527" alt="Image" src="https://github.com/user-attachments/assets/315d92a3-aac5-44d5-8388-3c6a74a12890" />
 
-This image show that FT could be used to examine different frequencies in an function. Larger impact will likely have higher height after transformation
+This image shows that FT could be used to examine different frequencies in a function. A larger impact will likely have a higher height after transformation.
 
 ### 7.3 Discrete Fourier Transform
-We mainly deal with Discrete Fourier Transform but there is also a version called [Discrete-Time](https://dsp.stackexchange.com/questions/16586/difference-between-discrete-time-fourier-transform-and-discrete-fourier-transfor) Fourier Transform
-- Discrete-Time Fourier Transform: In normal FT, you takae continous input but in Discrete-Time FT you only take discrete input. However, the frequency could be continous 
-- Discrete Fourier Transform: This is even more discrete than discrete-time where it take discrete input and output discrete frequencies.
+We mainly deal with Discrete Fourier Transform, but there is also a version called [Discrete-Time](https://dsp.stackexchange.com/questions/16586/difference-between-discrete-time-fourier-transform-and-discrete-fourier-transfor) Fourier Transform
+- Discrete-Time Fourier Transform: In normal FT, you take continuous input, but in Discrete-Time FT you only take discrete input. However, the frequency could be continuous 
+- Discrete Fourier Transform: This is even more discrete than discrete-time, where it takes discrete input and outputs discrete frequencies.
 
-Why do we need discrete? this is because our computer can only store the input in the form of samples. It couldn't store the continous input and can not output continuous frequencies as well. Thus DFT is actually commonly used for engineering. The idea is quite easy to derive since we have done all hard part in previous section. 
-Assume that we have sampling rate $f_{sr}$ and number of samples $N$. The time between each samples is 
+Why do we need discrete? This is because our computer can only store the input in the form of samples. It couldn't store the continuous input and can not output continuous frequencies as well. Thus, DFT is actually commonly used for engineering. The idea is quite easy to derive since we have done all the hard work in the previous section. 
+Assume that we have sampling rate $f_{sr}$ and number of samples $N$. The time between each sample is 
 
 $$\Delta t= T_{sr} = \frac{1}{f_{sr}}$$
 
-As we have analyzed, given N samples we only need to have N frequencies to reconstruct the original value. Taking $t=0$ means that we set the first vector as the start of the position (so no rotation for the first one).
+As we have analyzed, given N samples, we only need to have N frequencies to reconstruct the original value. Taking $t=0$ means that we set the first vector as the start of the position (so no rotation for the first one).
 
 $$f(t_k) = k\Delta t\ \ k\in [0,1,2...,N-1]$$
 
-And our Euler Exponent could be write as
+And our Euler Exponent could be written as
 
 $$f(t_k)e^{i2\pi f t_k}= f(t_k)e^{i2\pi f \frac{k}{f_{sr}}}$$
 
 **Now how should we choose frequencies** Turn out that [DFT](https://www.robots.ox.ac.uk/~sjrob/Teaching/SP/l7.pdf) assume the sequence length is actually periodic sequence. This means that 
 
 $$f(t_0) = f(t_N)$$ 
-Since it is already an integer cycle, based on what we anlayze about condition of balance, we only need to run an integer number of cycles. Let call $T_{seq}$ and $T_{euler}$ be the cycle of sequence input and Euler Rotation, respectively
 
-$$T_{seq} = m T_{euler}\\
-N\Delta t = m \frac{1}{f_{euler}}\\
-\frac{N}{f_{sr}}=  \frac{m}{f_{euler}}\\
-f_{euler} = m\frac{f_{sr}}{N}$$ 
+Since it is already an integer cycle, based on what we analyzed about the condition of balance, we only need to run an integer number of cycles. Let us call $T_{seq}$ and $T_{euler}$ the cycle of the sequence input and Euler Rotation, respectively
 
-Since we want N values of frequencies so there will N values of m. But what are they?
-for an artrbiary vector $t_k$
+$$T_{seq} = m T_{euler}$$
 
-$$e^{i2\pi f_{euler} t_k}\\
-e^{i2\pi m\frac{f_{sr}}{N} \frac{k}{f_{sr}}}\\
-e^{i2\pi \frac{m}{N}k}$$
+$$N\Delta t = m \frac{1}{f_{euler}}$$
 
-Notice that when $m=N$ we would have
+$$\frac{N}{f_{sr}}=  \frac{m}{f_{euler}}$$
 
-$$e^{i2\pi \frac{N}{N}k}\\
-e^{i2\pi k}=1$$
+$$f_{euler} = m\frac{f_{sr}}{N}$$ 
+
+Since we want N values of frequencies, there will be N values of m. But what are they?
+for an arbitrary vector $t_k$
+
+$$e^{i2\pi f_{euler} t_k}$$
+
+$$e^{i2\pi m\frac{f_{sr}}{N} \frac{k}{f_{sr}}}$$
+
+$$e^{i2\pi \frac{m}{N}k}$$
+
+Notice that when $m=N$ we would have.
+
+$$e^{i2\pi \frac{N}{N}k}$$
+
+$$e^{i2\pi k}=1$$
 
 and when $m=0$
 
-$$e^{i2\pi \frac{0}{N}k}\\
-e^{i2\pi 0k}=e^{0}=1$$
+$$e^{i2\pi \frac{0}{N}k}$$
 
-So we see that when $m=0$ and $m=N$ they just repeat the rotation similiar to the sequence input.
+$$e^{i2\pi 0k}=e^{0}=1$$
+
+So we see that when $m=0$ and $m=N$ they just repeat the rotation similar to the sequence input.
 $m\in [0,1,...,N-2]$
-Let $\{x_k\}$ be the sequence of input, and  $\{X_m\}$ be the sequence of output of the same length. Our Discrete Forier Transform would be
+Let $\{x_k\}$ be the sequence of input, and  $\{X_m\}$ be the sequence of output of the same length. Our Discrete Fourier Transform would be
 
 $$X_m = \sum_{k=0}^{N-1}x_ne^{i2\pi \frac{m}{N}k}$$
 
@@ -1295,45 +1377,46 @@ where
 
 $$f_m = \frac{mf_{sr}}{N}$$
 
-Each of those $f_m$ is called frequency bin.
+Each of those $f_m$ is called a frequency bin.
 ### 7.4 Fast Fourier Transform
-Why there is another Transform???
-Well we will use the DFT strategy, how it directly applying would take $O(n^2)$ complexity. People come up with the more optimized implementation with just $O(n\log n)$. This technique is called Fast Fourier Transform. This is interesting topic that might need further study. However, for the sake of this tutorial scope, it is enough for now.
-### 7.5 Nyquyst frequency
-Nyquist-Shannon Sampling [Theorem](https://www.youtube.com/watch?v=Jv5FU8oUWEY): we have to sample our signal at a rate that is faster than the twice frequency of origional signal to guarantee a perfect reconstruction
+***Why is there another transform???***
+
+Well, we will use the DFT strategy, how it directly applying would take $O(n^2)$ complexity. People came up with a more optimized implementation with just $O(n\log n)$. This technique is called Fast Fourier Transform. This is an interesting topic that might need further study. However, for the sake of this tutorial scope, it is enough for now.
+### 7.5 Nyquist frequency
+Nyquist-Shannon Sampling [Theorem](https://www.youtube.com/watch?v=Jv5FU8oUWEY): we have to sample our signal at a rate that is faster than twice the frequency of the original signal to guarantee a perfect reconstruction
 
 $$f_{sr} > 2f_{signal}$$ 
 
-The problem of this is due to sampling. As explain in here, when we use regular Fourier Transform, we could perfect frequency domain and converted it back as any way we want. However, when we sample it, it basically create sampled values that could fit many other functions if they coinicidance contains those values.
+The problem with this is due to sampling. As explained here, when we use regular Fourier Transform, we could perfect the frequency domain and convert it back in any way we want. However, when we sample it, it basically creates sampled values that could fit many other functions if they coincide with those values.
 
 <img width="1322" height="747" alt="Image" src="https://github.com/user-attachments/assets/34847be8-df37-4d5f-b285-15cdbf6ae18d" />
 
-There is also another problem. Look at the euler frequency that we have before
+There is also another problem. Look at the Euler frequency that we have before
 
 $$f_{euler} = m\frac{f_{sr}}{N}$$
 
 Remember that this $f_{euler}$ is what we try to test the frequency $f_{signal}$. As we shown above that when we have $$f_{euler} = kf_{sr}\ \ \ \ \ k \in [0,1,2,...]$$
-it would map to the same vector. This mean that regardless of whether sampled values are periodic or not. The frequency domain are itself peridoic with the frequencies $f_{sr}$
+it would map to the same vector. This means that regardless of whether sampled values are periodic or not. The frequency domain is itself periodic with the frequencies $f_{sr}$
 
 <img width="1328" height="317" alt="Image" src="https://github.com/user-attachments/assets/8a3fc89d-6b10-4fb2-a9a5-e516ffb86c8e" />
 
-The image above show that the regular FT only produce single a box of freqeuency range in freqeuncy domain. However if it is discrete, the box could be copied many times for every $f_{sr}$
+The image above shows that the regular FT only produces a single box in the frequency domain. However, if it is discrete, the box could be copied many times for every $f_{sr}$
 
 <img width="1326" height="752" alt="Image" src="https://github.com/user-attachments/assets/d2f5625e-c1a6-41e8-8527-f31db534701c" />
 
-As we decrease the $f_{sr}$, those box would get closer and closer to each other and they would overlap at some point
+As we decrease the $f_{sr}$, those boxes would get closer and closer to each other, and they would overlap at some point.
 
 <img width="1303" height="745" alt="Image" src="https://github.com/user-attachments/assets/2a4c218e-e09f-478b-8c5c-1e83a9f693a6" />
 
-they firgure out that the overlapping only happen if 
+They figure out that the overlap only happens if 
 
 $$f_{signal} >= \frac{f_{sr}}{2}$$
 
-So basically when the right side of first range 
+So basically, when the right side of the first range 
 
 $$f_{signal} = \frac{f_{sr}}{2}$$
 
-start to intersect with the left side of the first copy
+starts to intersect with the left side of the first copy
 
 $$f_{sr}-f_{signal}= \frac{f_{sr}}{2}$$ 
 
@@ -1342,7 +1425,7 @@ In order to remove that overlap, we need to have
 $$f_{sr} > 2f_{signal}$$
 
 so by doing this we can achieve two things
-- If we could estimate how big of the $f_{signal}$ is. We could isolote from other signal by setting it is less than $f_{sr}$ as there the true frequency center around 0 (like what we see in regular FT)
+- If we could estimate how big $f_{signal}$ is. We could isolate it from other signals by setting it to be less than $f_{sr}$, as there the true frequency is centered around 0 (like what we see in regular FT)
 - We could avoid overlapping with other spikes by setting it larger than 2
 
 ### 7.6 Symmetry for Real Value Input in DFT
@@ -1350,7 +1433,7 @@ For a real-value function $x[t]$, for a given frequency $f_k$ we have
 
 $$X(k)=\sum_{n=0}^{N-1}x(n)e^{-i2\pi \frac{k}{N}n}$$
 
-its conjunfcate is define as
+its conjugate is defined as
 
 $$\overline{X(k)}= \overline{\sum_{n=0}^{N-1}x(n)e^{i2\pi \frac{k}{N}n}}$$
 
@@ -1358,11 +1441,11 @@ $$\overline{X(k)}= \sum_{n=0}^{N-1}\overline{x(n)}\overline{e^{i2\pi \frac{k}{N}
 
 $$\overline{X(k)}= \sum_{n=0}^{N-1}x(n)e^{i2\pi \frac{k}{N}n}$$
 
-So we would have that 
+So we would have that. 
 
 $$\overline{X(k)} = X(-k)$$
 
-this is only true since $x(n)$ doesn't change when we apply conjucate. Nothing happen for now, however, there is symmetry if we take conjugate of $N-k$ instead
+This is only true since $x(n)$ doesn't change when we apply the conjugate. Nothing happens for now; however, there is symmetry if we take the conjugate of $N-k$ instead.
 
 $$\overline{X(N-k)}= \sum_{n=0}^{N-1}x(n)e^{i2\pi \frac{N-k}{N}n}$$
 
@@ -1377,7 +1460,8 @@ Therefore
 > 
 > $$\overline{X(N-k)}= X(k)$$
 > 
-> if x(n) is real function. This means that if we have a positive frequency $f_k$ at k, then the frequency at $N-k$ can be thought as its negative frequency for the same magnitude. Thus we would only need to compute for once.
+> if x(n) is real function. This means that if we have a positive frequency $f_k$ at k, then the frequency at $N-k$ can be thought of as its negative frequency for the same magnitude. Thus we would only need to compute it once.
+
 # 8 Window Function
 ### 8.1 Spectral Leakage
 As seen above, we process a chunk of samples **block_size** each time. Then we use the Fourier Transform to convert those into energy bins of frequencies. However, there is a problem with this chunked **block_size**. The start and end of the interval might not be connected smoothly. They could appear as if there were a disrupted start and end. The FFT expects a period of the signal, which means the start and end should connect [smoothly](https://www.youtube.com/watch?v=pD7f6X9-_Kg&t=461s). 
@@ -1386,13 +1470,13 @@ As seen above, we process a chunk of samples **block_size** each time. Then we u
 
 <img width="1291" height="730" alt="Image" src="https://github.com/user-attachments/assets/4554f5f5-c196-462f-b523-565af5b22682" />
 
-However, most of the time, we are not lucky enough to have smooth ends. Even if the original signal is indeed periodic, by missampling, one could recreate an aperiodic signal like the one above. From our analysis on the average vector, we know that anything a little more than a cycle could result in the average vector not coveraging to 0 when the frequency doesn't match.
+However, most of the time, we are not lucky enough to have smooth ends. Even if the original signal is indeed periodic, by mis-sampling, one could recreate an aperiodic signal like the one above. From our analysis on the average vector, we know that anything a little more than a cycle could result in the average vector not converging to 0 when the frequency doesn't match.
 Okay, we know those vectors don't cancel out, but what does it mean in terms of the Fourier Series or the Fourier Transform?
-Another interpretation using FS could be that: Since all the samples are equally spaced, there is a small time space between the last sample of this cycle and the first one in the beginning. However, since they are not equal to each other as 
+Another interpretation using FS could be that: Since all the samples are equally spaced, there is a small time space between the last sample of this cycle and the first one in the beginning. However, they are not equal to each other, as 
 
 $$x[0] = x[N] \neq x[N-1]$$
 
-Then there is a disrupt jump from $x[N-1]$ to $x[N]$. You might think this jump is kinda like a small, almost vertical line. And as shown in [image](https://www.youtube.com/watch?v=x-2tArPbX9A) below,
+Then there is a disruptive jump from $x[N-1]$ to $x[N]$. You might think this jump is kinda like a small, almost vertical line. And as shown in [image](https://www.youtube.com/watch?v=x-2tArPbX9A) below,
 
 <img width="1271" height="743" alt="Image" src="https://github.com/user-attachments/assets/3127d6d3-140f-4c0c-b726-f4738841ec26" />
 
@@ -1400,7 +1484,7 @@ It requires many waves just to represent this jump, potentially infinitely. And 
 
 <img width="1278" height="712" alt="Image" src="https://github.com/user-attachments/assets/e9302e4a-0e61-46cc-a0ee-459a0b168fd2" />
 
-This makes the energy of the frequency of that point distributed to many other frequencies as if it were leaked. Thus, it is called [spectral leakage](https://www.ni.com/en/shop/data-acquisition/measurement-fundamentals/analog-fundamentals/understanding-ffts-and-windowing.html?utm_source=chatgpt.com).
+This makes the energy of that frequency at that point distributed to many other frequencies as if it were leaked. Thus, it is called [spectral leakage](https://www.ni.com/en/shop/data-acquisition/measurement-fundamentals/analog-fundamentals/understanding-ffts-and-windowing.html?utm_source=chatgpt.com).
 <p align="center">
   <img src="https://github.com/user-attachments/assets/653706e7-9c66-4492-8463-3aeb2f92fd9f" width="48%" alt="No Jump" />
   <img src="https://github.com/user-attachments/assets/225b3ba8-e389-47c9-a4c2-5a7a1443565a" width="48%" alt="Yes Jump" />
@@ -1408,7 +1492,7 @@ This makes the energy of the frequency of that point distributed to many other f
 The left image shows that if the two ends are connected together to represent a complete period, the result is just the energy of single frequencies. However, the right image shows that if those are not connected smoothly, it could spread the energy in a wide range of frequencies.
 
 ### 8.2 Windowing function
-The way computer usually sample where it just read a bunch of samples of values for given time frame can mathematicsized by using rectangular windowing function. Specifically, it [is](https://www.dsprelated.com/freebooks/sasp/Rectangular_Window.html)
+The way computers usually sample, where they just read a bunch of samples of values for a given time frame, can be mathematicalized by using a rectangular windowing function. Specifically, it [is](https://www.dsprelated.com/freebooks/sasp/Rectangular_Window.html)
 
 $$w(n) = \begin{cases}
 1 & 0\leq n \leq N-1\\
@@ -1418,38 +1502,44 @@ and our sampled values are defined as
 $$x[n] = x(t_n)*w(n)$$
 
 
-The problem with the rectangular window is that it could discrupt cut the signal which result in spectral leakage as shown above. To minimize the Spectral Leakage problem, one of the way would be to reduce the discontinuity between the start and end. One technique is to use another [windowing](https://community.sw.siemens.com/s/article/windows-and-spectral-leakage) function that smoothes both ends to zero, so they appear as if they were indeed a period
+The problem with the rectangular window is that it could disrupt the signal, which results in spectral leakage as shown above. To minimize the Spectral Leakage problem, one way would be to reduce the discontinuity between the start and end. One technique is to use another [windowing](https://community.sw.siemens.com/s/article/windows-and-spectral-leakage) function that smooths both ends to zero, so they appear as if they were indeed a period
 
 <img width="1305" height="905" alt="Image" src="https://github.com/user-attachments/assets/678c730b-3736-42cd-bf22-e48220b036e7" />
 
-In this case we apply [Hann window] which is defien as
+In this case, we apply the Hann window, which is defined as
 
 $$w(n) = \begin{cases}
 \frac{1}{2}\left[1-\cos\left(\frac{2\pi n}{N-1}\right)\right] &0\leq n \leq N-1\\
 0 & otherwise
 \end{cases}$$
 
-As shown above that using windowing function might not recreate the origional signal but it effectively reduce the the spectral leakage around our target frequency
+As shown above, using a windowing function might not recreate the original signal, but it effectively reduces the spectral leakage around our target frequency.
 
 <img width="907" height="671" alt="Image" src="https://github.com/user-attachments/assets/249679c2-304f-4ec2-8def-c2711be13dce" />
 
 #### 8.3 Overlapping windows 
-This section is optinal if your goal just stop at analyzing magnitude as energy. However this is needed in the future where we implement change to our our signal and want to convert back to the signal. As stated above where I say that the signal we work is not the same as origional window. This is because we have smothed both the end where it become at both ends. 
-**How can we even reconstruct a non zero number from just a literal zero?**
-The idea is that instead of apply window chunk by chunk, we overlap them so that for each point in the origional signal, it could be reference by two positions in two windowed chunked (also called frames). This mean that for a given point $x[t]$, it could be represented by two points x[n] and x[n+H] 
+This section is optional if your goal just stops at analyzing magnitude as energy. However, this is needed in the future where we implement changes to our signal and want to convert back to the signal. As stated above, where I say that the signal we work with is not the same as the original window. This is because we have smoothed both ends, where it becomes at both ends. 
+
+**How can we even reconstruct a non-zero number from just a literal zero?**
+
+The idea is that instead of applying the window chunk by chunk, we overlap them so that for each point in the original signal, it could be referenced by two positions in two windowed chunks (also called frames). This mean that for a given point $x[t]$, it could be represented by two points x[n] and x[n+H] 
 
 $$w[n] + w[n+H] = 1$$
 
-where w[n] is the position in the first chunk and w[n+H] is for the same signal point but in the position of second chunk. H is how much many positions that a same point shift from one chunk to another chunk. If H equal whole length then there is literal no shift. if H =0 then it is completely overlap. Usually we left $H = Length / 2$. 
+where w[n] is the position in the first chunk, and w[n+H] is for the same signal point but in the position of the second chunk. H is how many positions a same point shifts from one chunk to another chunk. If H equals the whole length, then there is literally no shift. If H = 0, then it is completely overlapped. Usually we leave $H = Length / 2$. 
 
 <img width="700" height="750" alt="Image" src="https://github.com/user-attachments/assets/6d819b4e-8910-4d13-bd8f-544f4d32cb20" />
 
-So based on this [overlapping](https://speechprocessingbook.aalto.fi/Representations/Windowing.html), whenever w[n] become zero, we could reconstruct the lsot information by using other reference point w[n+1]
+So, based on this [overlapping](https://speechprocessingbook.aalto.fi/Representations/Windowing.html), whenever w[n] becomes zero, we could reconstruct the lost information by using the other reference point, w[n+1]
 
 
 # 9 Spectrogram
-Now you have the anaylysis of frequencies for each windowed chunk. while it give us detail for each, it didn't give us a big picture of what is going over the time. You are not probably analyze each individual chunk for everytime. Thus we need a tool to combine information accross all chunks to aid our decision-making. To solve this, people usually use spectrogram. Simply speaking, spectrogram is the collection of DFT chunks in the time order. Thus it is 3D dimension of time, frequencies and amplitude of that frequencies. However, it is sually graphed as 2 dimension where x axis is time and y axis is the frequencies. The amplitude is represented as the color where darker color means larger value.
+Now you have the analysis of frequencies for each windowed chunk. While it gives us detail for each, it didn't give us a big picture of what is going on over time. You probably don't analyze each individual chunk every time. Thus, we need a tool to combine information across all chunks to aid our decision-making. To solve this, people usually use a spectrogram. Simply speaking, a spectrogram is the collection of DFT chunks in the time order. Thus, it is a 3D dimension of time, frequencies, and the amplitude of those frequencies. However, it is usually graphed as a 2D graph where the x-axis is time and the y-axis is the frequencies. The amplitude is represented as the color, where a darker color means a larger value.
+
 <img width="768" height="534" alt="Image" src="https://github.com/user-attachments/assets/c75a3ee1-38d0-4d36-b7b7-2f58f6f81229" />
-As you can see here the frequency is rotate to the vertical axis, and the horizontal axis just represent the chronological chunks. 
-**Wait a minute, if each chunk represent a small length of horizontal axis, why there is no area where they have conistenly similiar color to represent that chunk?**
-This is because those chronological chunsk are indeed overlap. This mean that each point (time,frequency) could be computed by at least two reference poitns from two sequences. Thus this make it different from two adjacent chunks.
+
+As you can see here, the frequency is rotated to the vertical axis, and the horizontal axis just represents the chronological chunks. 
+
+**Wait a minute, if each chunk represents a small length of the horizontal axis, why is there no area where they have consistently similar color to represent that chunk?**
+
+This is because those chronological chunks do indeed overlap. This means that each point (time, frequency) could be computed by at least two reference points from two sequences. Thus, this makes it different from two adjacent chunks.
