@@ -135,12 +135,15 @@ Lastly, there is an issue with the latest version of Ollama where it fails to de
   ```
   Make sure that the CUDA is supported and the GPU name is displayed
   <img width="1258" height="77" alt="image" src="https://github.com/user-attachments/assets/2ee5c311-1a36-4387-bc29-37aa4722e889" />
+- **Step 10**: Github doesn't allow me to store a file that is more than 100 MiB so I have to store the weight in Google Drive. Download it from [here](https://drive.google.com/file/d/1kfn7kYzbx7CwIPr3uy92x5pXNjHMOwFo/view?usp=sharing) and move it to the folder /facts/language_model
 
-- **Step 10**: Create the TinyLlama in ollama
+<img width="1012" height="278" alt="Image" src="https://github.com/user-attachments/assets/f539614f-df1c-4ae9-9415-1b805eecf4f8" />
+
+- **Step 11**: Create the TinyLlama in ollama
   ```python
   ollama create genz -f ./fine_tune/Modelfile
   ```
-- **Step 11**: Run and enjoy your AI Bot
+- **Step 12**: Run and enjoy your AI Bot
   ```python
   python main.py
   ```
