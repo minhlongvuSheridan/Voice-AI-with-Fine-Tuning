@@ -174,9 +174,9 @@ Go to the Search bar and type "Ollama"<br/>
 
 Just open it on and the problem solved
 #### 3 Use shared Memory GPU instead of Dedicated Vram
-This is the problem with the latest version of Ollama server 0.30.x. Basically it detects the GPU and your GPU also have enough VRAM but it doesn't use it
+This is the problem with the latest version of Ollama server 0.30.x. Basically it can detect the GPU and your GPU also has enough VRAM but it doesn't use it
 <img width="1127" height="115" alt="image" src="https://github.com/user-attachments/assets/54e9e453-0e9a-41d9-89bc-46aaba2c81af" />
-instead it use shared memory which cause your application extremely for no reason. 
+instead it use shared memory which cause your application extremely slow for no reason. 
 You can see the discussion [here](https://github.com/ollama/ollama/issues/16536) <br/>
 Solution: 
 - Open cmd and set those:
