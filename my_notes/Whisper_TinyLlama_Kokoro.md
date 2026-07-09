@@ -1,6 +1,8 @@
 <h1 align="center">🗣️ Whisper + TinyLlama + Kokoro 🗣️</h1>
 
-# 0 Table of Contents
+# Table of Contents
+
+<small>
 
 - [1 General Architecture](#1-general-architecture)
     - [1.1 Workflow](#11-workflow)
@@ -22,6 +24,7 @@
     - [4.3 TinyLlama](#43-tinyllama)
 - [5 Kokoro TTS](#5-kokoro-tts)
 - [6 Tkinter](#6-tkinter)
+</small>
 
 # 1 General Architecture
 ### 1.1 Workflow

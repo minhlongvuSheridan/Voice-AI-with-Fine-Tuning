@@ -6,9 +6,11 @@ date: "2026-06-02"
 ```{r}
 # replace with your own path
 
-ollama_file <-"C:\\Users\\haivu\\OneDrive - Sheridan College\\Desktop\\computer\\Project\\Chat_Box_AI\\test_requirement\\prompt_ollama.txt"
-kokoro_file <- "C:\\Users\\haivu\\OneDrive - Sheridan College\\Desktop\\computer\\Project\\Chat_Box_AI\\test_requirement\\tts_kokoro.txt"
-whisper_file <- "C:\\Users\\haivu\\OneDrive - Sheridan College\\Desktop\\computer\\Project\\Chat_Box_AI\\test_requirement\\transcribe_whisper.txt"
+tiny_file <-"C:\Users\haivu\OneDrive - Sheridan College\Desktop\computer\Project\Chat_Box_AI\Voice AI with Fine Tuning\assets\facts\prompt_genz.txt"
+
+kokoro_file <- "C:\Users\haivu\OneDrive - Sheridan College\Desktop\computer\Project\Chat_Box_AI\Voice AI with Fine Tuning\assets\facts\tts_kokoro.txt"
+
+whisper_file <- "C:\Users\haivu\OneDrive - Sheridan College\Desktop\computer\Project\Chat_Box_AI\Voice AI with Fine Tuning\assets\facts\transcribe_whisper_small.txt"
 
 ollama <- readLines(ollama_file)
 kokoro <- readLines(kokoro_file)

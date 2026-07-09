@@ -23,7 +23,7 @@ SPEECH_THRESHOLD_DB = 7
 # what happen we talk all the time ?
 SILENCE_THRESHOLD_DB = 7
 HANGOVER_SOUND_DURATION = 3 # chunks
-TAIL_SILENCE_DURATION = 25 # chunks
+TAIL_SILENCE_DURATION = 10 # chunks
 
 # Calculated constant
 WINDOW_LENGTH = int(SAMPLE_RATE * WINDOW_LENGTH_MS / 1000)

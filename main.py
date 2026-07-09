@@ -35,12 +35,12 @@ BOT_NAME = "Jerry"
 BOT_AVATAR = "./assets/images/jerry.png"
 
 ## Whisper 
-WHISPER_SIZE = "tiny"
+WHISPER_SIZE = "small"
 WHISPER_DEVICE = "cuda"
 WHISPER_COMPUTE_TYPE = "float32"
 
 ## LLM 
-LLM_MODEL_NAME = "genz45"
+LLM_MODEL_NAME = "genz"
 
 ## KOKORO
 KOKORO_REPO_ID = 'hexgrad/Kokoro-82M'

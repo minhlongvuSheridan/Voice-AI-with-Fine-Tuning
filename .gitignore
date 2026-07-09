@@ -2,3 +2,5 @@ measures/*.txt
 /.dist
 venv
 __pycache__
+assets/language_model/tinyllama-chat.Q4_K_M.gguf
+assets/language_model/tinyllama-chat.Q4_K_M2_good.gguf

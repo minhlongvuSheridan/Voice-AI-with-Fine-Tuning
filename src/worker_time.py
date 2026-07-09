@@ -18,7 +18,7 @@ import msvcrt
 import sounddevice as sd
 import time
 
-SAVE_DIR = "./measures"
+SAVE_DIR = "./assets/facts"
 
 def flush_input():
     

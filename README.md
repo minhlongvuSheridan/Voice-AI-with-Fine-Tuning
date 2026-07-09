@@ -26,8 +26,18 @@ Other components:
 - ***Tkinter***: Library help create GUI to display the text
 
 ### Latency Statistic
+<img width="1005" height="556" alt="Image" src="https://github.com/user-attachments/assets/4bc93472-0292-4a84-85f8-a83e76bae671" />
+
+Based on the above, the latency for each is:
+* **Whisper:** 0.385s
+* **TinyLlama:** 0.089s
+* **Kokoro:** 0.089s
+
+This brings the total to at least 0.563s. It is "at least" because we must also factor in VAD latency, where the system has to wait for sampling sound and silence sound. Overall, the total latency is around 1s, which is acceptable.
 
 # Demo 📊
+
+<video src="https://github.com/user-attachments/assets/05e6a1d9-4caf-4cac-94da-4f219b3e96ab" width="60%" controls></video>
 
 # Tech Used 🛠️
 <p align="left">
@@ -39,46 +49,60 @@ Other components:
 </p>
 
 # Structure Folder 📂
-- **assets**
-  - **images**: Images Avatar for the UI
-  - **voices**: Voices for the kokoro model
-- **fine_tune**
-  -  ***Modelfile***: Configuration file to create local ollama model 
-  -  ***genz3.jsonl***: data to fine tune model 
-  -  ***tinyllama_finetune.ipynb***: Python scripts to fine tune the model. Inteneded to run on Google Colab
-- **measures**:
-  - ***prompt_ollama.txt***: Time (s) frompt prompt to the first chunk of response
-  - ***transcribe_whisper.txt***: Time (s) for whisper to transcribe a sentence
-  - ***tts_kokoro.txt***: Time (s) for kokoro to generate the audio array
-  - ***test_performance.Rmd***: an R script to display the box plot for comparision between three above files
-- **src**:
-  - ***chat_classes.py***: Contains the UI
-  - ***vad.py***: Main logic for the Voice Activity Detection
-  - ***worker.py***: Workers for each thread
-  - ***worker_time.py***: same as above but it produce files in measures folder
-- ***main.py***: The main program that run the AI chat bot
-- ***requirements.txt***: Required dependencies for the program.
-# Notes Before You Run ⚠️
-I ran this project on the 8 GB RTX 4060 Laptop GPU.
-- **Storage**: The whole fully functional project took around 7.1 GB of disk space.
-- **VRAM - GPU RAM**: ~~5.9 GiB
-    - ***TinyLlama***: 1358 Mib
-    - ***Pytorch Kokoro***: 850 Mib
-    - ***Whisper - Medium***: 3871 Mib<br/>
-    
-    
-If 5.9 Gib is too much for your GPU, consider switching Whisper ASR from medium to tiny version.  It is lighter and faster but in trade of performance (terrible for those with heavy accents). Tiny version only takes 250 Mib which contribute to a total of around 2.4 Gib VRAM
--  **VRAM - GPU RAM**: ~~2.4 GiB
-    - ***TinyLlama***: 1358 Mib
-    - ***Pytorch Kokoro***: 850 Mib
-    - ***Whisper - Tiny***: 250 Mib<br/>
 
-If you are still short on the VRAM (assuming that you have GPU VRAM of 2Gib ). You can actually run the 4-bit quantization TinyLlama which only take around 850 Mib (detail in the tutorial).
--  **VRAM - GPU RAM**: ~~1.9 GiB
-    - ***TinyLlama - 4-bit***: 850 Mib
-    - ***Pytorch Kokoro TTS***: 850 Mib
-    - ***Whisper - Tiny***: 250 Mib<br/>
+```text
+Voice-AI-with-Fine-Tuning/
+├── assets/                         # Non-script files
+│   ├── facts/                      # Store raw data for measuring scripts
+│   ├── images/                     # Images for the avatar in Tkinter
+│   ├── language_model/             # The language model weights for Modelfile
+│   ├── train_prompt/               # The input data for fine tuning
+│   └── voices/                     # The voice weights for TTS Kokoro
+├── fine_tune/                      # Script files for fine tuning
+│   ├── Modelfile                   # Configuration file to create local Ollama model
+│   └── tinyllama_finetune.ipynb    # Python scripts to fine tune the model on Google Colab
+├── measures/                       # Script file for measuring performance
+│   └── test_performance.Rmd        # R script to display the box plot 
+├── my_notes/                       # What I learnt from this project
+│   ├── Fine_Tune_Model.md          # Relevant knowledge needed for finetuning of Language Model
+│   ├── Neural_Network.md           # Bare minimum example of how backpropagation works
+│   ├── Sound_Audio.md              # Detailed explanation of how Fourier Transform works in audio
+│   └── Whisper_TinyLlama_Kokoro.md # General description of architecture
+├── src/                            # Python scripts file
+│   ├── chat_classes.py             # Contains the UI
+│   ├── vad.py                      # Main logic for the Voice Activity Detection
+│   ├── worker.py                   # Workers for each thread
+│   └── worker_time.py              # Same as above but it produces .txt file for measuring
+├── main.py                         # The main program that runs the AI chatbot
+└── requirements.txt                # Required dependencies for the program
+```
+# Requirements Before You Run ⚠️
 
+I ran this project on an **8 GB RTX 4060 Laptop GPU**.
+
+- **Storage**: The fully functional project took around **7.1 GB** of disk space.
+- **VRAM - GPU RAM**: ~~2.9 GiB
+    - ***TinyLlama***: 900 MiB
+    - ***PyTorch Kokoro***: 850 MiB
+    - ***Whisper - Small***: 1101 MiB<br/>
+
+If you don't have enough VRAM, you can reduce the size of Whisper to the **Tiny** version, which only takes around **250 MiB**. However, only do this if you have a **clear accent**.
+
+- **VRAM - GPU RAM**: ~~2 GiB
+    - ***TinyLlama***: 900 MiB
+    - ***PyTorch Kokoro***: 850 MiB
+    - ***Whisper - Tiny***: 250 MiB<br/>
+
+If you have a **heavy accent**, I would recommend the **Medium** version, which works really well but is significantly heavier.
+
+- **VRAM - GPU RAM**: ~~5.6 GiB
+    - ***TinyLlama***: 900 MiB
+    - ***PyTorch Kokoro***: 850 MiB
+    - ***Whisper - Medium***: 3871 MiB<br/>
+
+Secondly, make sure that the **Ollama** application is running on your device. You can download it from [here](https://ollama.com/download). Theoretically, it should work with llama.cpp but my tutorial is built based on Ollama
+
+Lastly, there is an issue with the latest version of Ollama where it fails to detect the GPU. The application will still work, but it may run somewhat slower. Please refer to problem 3 at **TroubleShoot** section to fix it.
 # Run scripts 🚀
 - **Step 1:** Open command prompt terminal in your project folder
 - **Step 2**: Clone the project
@@ -121,13 +145,13 @@ If you are still short on the VRAM (assuming that you have GPU VRAM of 2Gib ). Y
   python main.py
   ```
 # Make Your Own AI Voice 🤖🔊
-I have prepare the tutorial for this. But generally there are three steps:
-- Step 1: Create your own dataset
-- Step 2: Turn on T4 GPU on Google Colab and train based on *tinyllama_finetune.ipynb*
-- Step 3: Download gguf file and make local model based on *Modelfile*
+I have prepare the detailed notes for this. Generally there are three steps:
+- **Step 1**: Create your own dataset
+- **Step 2:** Turn on T4 GPU on Google Colab and train based on *tinyllama_finetune.ipynb*
+- **Step 3:** Download gguf file and make local model based on *Modelfile*
 
 # Troubleshoots
-####  Missmatch intepreter
+####  1 Missmatch intepreter
 If after downloading everything but you still see errors like this
 <img width="1130" height="456" alt="image" src="https://github.com/user-attachments/assets/63592e0f-f8ff-47f8-b372-917762928cb0" />
 
@@ -138,7 +162,7 @@ From this </br>
 To this </br>
 <img width="1067" height="90" alt="image" src="https://github.com/user-attachments/assets/4e984b26-a53a-4525-84f1-591cc56d9b95" />
 
-#### Machine actively refuse
+#### 2 Machine actively refuse
 If you are able to run but get crash while prompting or speaking and get the error like below
 <img width="1149" height="333" alt="image" src="https://github.com/user-attachments/assets/dd75d74d-5495-48f4-88f4-227857151363" />
 it is likely that you have not turn on the Ollama App. The reason is that we don't actually run the TinyLlama in our python script. The Ollama runs it and we just use API calls under the hood. We only actually runs the Whisper and Kokoro TTS in our python application<br/>
@@ -146,7 +170,7 @@ Go to the Search bar and type "Ollama"<br/>
 <img width="415" height="124" alt="image" src="https://github.com/user-attachments/assets/1e1b0156-0b96-48aa-a502-d06cee63ff3a" />
 
 Just open it on and the problem solved
-#### Use shared Memory GPU instead of Dedicated Vram
+#### 3 Use shared Memory GPU instead of Dedicated Vram
 This is the problem with the latest version of Ollama server 0.30.x. Basically it detects the GPU and your GPU also have enough VRAM but it doesn't use it
 <img width="1127" height="115" alt="image" src="https://github.com/user-attachments/assets/54e9e453-0e9a-41d9-89bc-46aaba2c81af" />
 instead it use shared memory which cause your application extremely for no reason. 
@@ -159,6 +183,9 @@ Solution:
   ```
 - Then close the Ollama application
 - Start Ollama again
+  ```
+  ollama serve
+  ```
 
 
 

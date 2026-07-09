@@ -2,6 +2,8 @@
 
 # Table of Contents
 
+<small>
+
 - [1 Sound wave](#1-sound-wave)
 - [2 Sampling](#2-sampling)
 - [3 Complex number](#3-complex-number)
@@ -53,7 +55,7 @@
     - [8.2 Windowing function](#82-windowing-function)
         - [8.3 Overlapping windows](#83-overlapping-windows)
 - [9 Spectrogram](#9-spectrogram)
-
+</small>
 
 # 1 Sound wave
 In order to understand why we even need VAD, we need to understand how humans speak. Basically, when we speak, the airflow from the lungs goes outside. During the path, it is oscillated by the articulators such as the tongue, lip...
